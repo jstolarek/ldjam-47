@@ -1,0 +1,18 @@
+# Haxe sandbox
+.haxelib
+
+# Haxe default build directory
+/bin
+
+# release files
+/release
+icon.icns
+/dist/armv7l/bin/hl
+
+# Compiled resources
+hxd.fmt.pak.Build.hl
+res.pak
+res/.tmp
+
+# Game configuration file
+config.json

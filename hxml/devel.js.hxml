@@ -1,0 +1,7 @@
+hxml/common.hxml
+
+# development build
+-D devel
+
+# Target
+--js bin/devel.js

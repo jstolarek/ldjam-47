@@ -1,0 +1,7 @@
+# release build
+-D release
+-D analyzer-optimize
+-D ASSERTION_NO_ASSERT
+
+--no-traces
+--dce full

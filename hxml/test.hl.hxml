@@ -1,0 +1,10 @@
+hxml/test.common.hxml
+
+# Dependencies
+-lib hlsdl
+
+# Target
+-hl bin/testsuite.hl
+
+# Run tests after successful compilation
+--cmd hl bin/testsuite.hl

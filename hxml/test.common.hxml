@@ -1,0 +1,12 @@
+# Source directories
+--class-path src
+--class-path test
+
+# Dependencies
+--library assertion
+--library heaps
+--library utest
+--library hexlog
+
+# Entry point
+--main Testsuite

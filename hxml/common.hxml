@@ -1,0 +1,11 @@
+# Source directories
+--class-path src
+
+# Dependencies
+--library assertion
+--library heaps
+--library hexlog
+--library ogmo-3
+
+# Entry point
+--main Main

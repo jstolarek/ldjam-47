@@ -1,0 +1,45 @@
+{
+  "name": "Test levels",
+  "ogmoVersion": "3.3.0",
+  "levelPaths": ["levels/"],
+  "backgroundColor": "#282c34ff",
+  "gridColor": "#3c404900",
+  "anglesRadians": true,
+  "directoryDepth": 1,
+  "layerGridDefaultSize": {"x": 16, "y": 16},
+  "levelDefaultSize": {"x": 320, "y": 240},
+  "levelMinSize": {"x": 16, "y": 16},
+  "levelMaxSize": {"x": 4096, "y": 4096},
+  "levelValues": [
+    {"name": "name", "definition": "String", "defaults": "", "maxLength": 0, "trimWhitespace": true},
+    {"name": "display_name", "definition": "String", "defaults": "", "maxLength": 0, "trimWhitespace": true}
+  ],
+  "defaultExportMode": ".json",
+  "compactExport": false,
+  "externalScript": "",
+  "playCommand": "",
+  "entityTags": [],
+  "layers": [
+    {
+      "definition": "tile",
+      "name": "background",
+      "gridSize": {"x": 16, "y": 16},
+      "exportID": "37480512",
+      "exportMode": 0,
+      "arrayMode": 1,
+      "defaultTileset": "background"
+    },
+    {
+      "definition": "grid",
+      "name": "collisions",
+      "gridSize": {"x": 16, "y": 16},
+      "exportID": "37525268",
+      "arrayMode": 1,
+      "legend": {"0": "#00000000", "1": "#cc0e0ea6"}
+    }
+  ],
+  "entities": [],
+  "tilesets": [
+    {"label": "background", "path": "bg.png", "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAAXNSR0IArs4c6QAAADBQTFRFAAAAHStTfiVTAIdRq1I2X1dPwsPH//Ho/wBN/6MA/+wnAOQ2Ka3/g3ac/3eo/8yq7qM6fAAAABB0Uk5TAP///////////////////8BQi0MAAAAeSURBVDiNY2BDA+xogGFUwYhSwIQGeNHAqIIRpQAAV1kcAd82Rk8AAAAASUVORK5CYII=", "tileWidth": 16, "tileHeight": 16, "tileSeparationX": 0, "tileSeparationY": 0}
+  ]
+}

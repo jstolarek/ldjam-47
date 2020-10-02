@@ -1,0 +1,18 @@
+{
+    "name"         : "gameWheel",
+    "url"          : "https://github.com/jstolarek/gameWheel",
+    "license"      : "MIT",
+    "tags"         : ["Heaps"],
+    "description"  : "Personal libs I use in my Haxe projects.",
+    "version"      : "0.0.1",
+    "classPath"    : "src/",
+    "releasenote"  : "Pre-release",
+    "contributors" : ["jstolarek"],
+    "dependencies" :
+      { "assertion" : "1.0.0"
+      , "hexlog"    : "1.0.0-alpha.7"
+      , "heaps"     : "git"
+      , "hlsdl"     : "1.10.0"
+      , "ogmo-3"    : "1.0.2"
+      }
+}

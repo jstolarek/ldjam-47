@@ -1,0 +1,8 @@
+hxml/test.common.hxml
+
+# Target
+-js bin/testsuite.js
+
+# Run tests after successful compilation
+--cmd echo '<!DOCTYPE html><meta charset="UTF-8"><html><body><script src="testsuite.js"></script></body></html>' > bin/testsuite.html
+--cmd xdg-open bin/testsuite.html

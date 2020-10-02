@@ -1,0 +1,5 @@
+hxml/common.hxml
+hxml/release.hxml
+
+# Target
+--js bin/release.js

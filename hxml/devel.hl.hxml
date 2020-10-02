@@ -1,0 +1,10 @@
+hxml/common.hxml
+
+# development build
+-D devel
+
+# Dependencies
+--library hlsdl
+
+# Target
+--hl bin/devel.hl

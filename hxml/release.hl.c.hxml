@@ -1,0 +1,8 @@
+hxml/common.hxml
+hxml/release.hxml
+
+# Dependencies
+--library hlsdl
+
+# Target
+--hl bin/release_src/main.c
