@@ -14,6 +14,7 @@
 // level must be set before Entities are used.
 
 import en.Manager; //FIXME: force compilation
+import en.interactables.*;
 
 class Boot extends Process {
   public static var ME : Boot = null;
@@ -56,6 +57,13 @@ class Boot extends Process {
     world.setCurrentLevel( LevelName.OPEN_SPACE_1 );
 
     player = new Player( );
+
+    var coffee = new Coffee( 1, 3, player );
+    layers.add( coffee.layers, ENTITY_LAYER );
+
+    var key = new Key( 14, 6, player );
+    layers.add( key.layers, ENTITY_LAYER );
+
     layers.add( player.layers, ENTITY_LAYER );
 
     camera = new Camera( );
