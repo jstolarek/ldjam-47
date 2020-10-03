@@ -64,8 +64,8 @@ class Manager extends Entity<ManagerAnimState, Unit> {
 
     cx     = startX;
     cy     = startY;
-    xr     = 0.5;
-    yr     = 0.5;
+    xr     = 0.0;
+    yr     = 0.0;
     target = 0;
     this.patrolPath = patrolPath;
 
@@ -122,7 +122,7 @@ class Manager extends Entity<ManagerAnimState, Unit> {
     var xModifier = Direction.xModifier( direction );
     var yModifier = Direction.yModifier( direction );
 
-    var angle = Utils.angleTo( x, y, (target.x + 0.5) * gx, (target.y + 0.5) * gx );
+    var angle = Utils.angleTo( x, y, (target.x) * gx, (target.y) * gx );
 
     vx = Math.cos( angle ) * Const.MANAGER_BASE_SPEED;
     vy = Math.sin( angle ) * Const.MANAGER_BASE_SPEED;
@@ -130,12 +130,12 @@ class Manager extends Entity<ManagerAnimState, Unit> {
     xr += vx;
     yr += vy;
 
-    var target_dist = Utils.dist( x, y, (target.x + 0.5) * gx, (target.y + 0.5) * gy );
+    var target_dist = Utils.dist( x, y, target.x * gx, target.y * gy );
     if ( target_dist < Const.MANAGER_TARGET_DEADZONE ) {
       cx = target.x;
       cy = target.y;
-      xr = 0.5;
-      yr = 0.5;
+      xr = 0.0;
+      yr = 0.0;
       vx = 0.0;
       vy = 0.0;
 
@@ -147,7 +147,7 @@ class Manager extends Entity<ManagerAnimState, Unit> {
 
   inline function updateDirection( ) : Void {
     direction = Direction.directionTo( x, y,
-      (patrolPath[ target ].x + 0.5) * gx, (patrolPath[ target ].y + 0.5) * gy );
+      patrolPath[ target ].x * gx, patrolPath[ target ].y * gy );
     LOGGER.debug( "Direction set to " + direction );
   }
 }
