@@ -122,7 +122,7 @@ class Player extends Entity<State, String> {
 
     // FIXME: hack for prototyping purposes
     animation.scaleX = 2;
-    animation.scaleY = 4;
+    animation.scaleY = 2;
   }
 
   private inline function setAnimations() : Void {
