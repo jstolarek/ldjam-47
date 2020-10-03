@@ -149,6 +149,7 @@ class Player extends Entity<State, String> {
     xr += vx;
     yr += vy;
 
+    handleCollisions( );
     applySpeedFriction( );
   }
 
@@ -156,7 +157,7 @@ class Player extends Entity<State, String> {
     // BEGIN TEST STUFF
     animation.stateAnims =
       Aseprite.loadStateAnimation( "player", State.fromString );
-    animation.pivot = new Animation.Pivot( 0.5, 0.75, true );
+    animation.pivot = new Animation.Pivot( 0.5, 1, true );
 
     animation.registerStateAnimation( WALK_UP, 1, function ( ) {
       return actions[ UP ];
@@ -198,6 +199,53 @@ class Player extends Entity<State, String> {
   override inline function hasCircCollWith<S, T>(e: Entity<S, T>) {
     if( Std.is(e, Manager) ) return true;
     return false;
+  }
+
+  private inline function handleCollisions( ) : Void {
+    if ( xr > 0.4 && level.hasDeskCollision( cx + 1, cy ) ) {
+      xr = 0.4;
+      if ( vx > 0 ) {
+        vx /= 4;
+      }
+    }
+
+    if ( xr >= 0.3 && level.hasDeskCollision( cx + 1, cy ) ) {
+      if ( vx > 0 ) {
+        vx /= 2;
+      }
+    }
+/*
+*/
+
+    if ( xr < 0.1 && level.hasDeskCollision( cx - 1, cy ) ) {
+      xr = 0.1;
+      if ( vx < 0 ) {
+        vx /= 4;
+      }
+    }
+
+/*
+    if ( xr < 0.4 && level.hasDeskCollision( cx - 1, cy ) ) {
+      if ( vx < 0 ) {
+        vx/=2;
+      }
+    }
+*/
+
+    if ( yr > 0.4 && level.hasDeskCollision( cx, cy + 1 ) ) {
+      yr = 0.4;
+      if ( vy > 0 ) {
+        vy /= 4;
+      }
+    }
+
+
+    if ( yr < 0.6 && level.hasDeskCollision( cx, cy ) ) {
+      yr = 0.6;
+      if ( vy < 0 ) {
+        vy /= 4;
+      }
+    }
   }
 
   private inline function resetActions( ) : Void {

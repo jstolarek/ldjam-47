@@ -64,6 +64,7 @@ class Console extends h2d.Console {
     // Flags enabled by default
     flags.set( ALWAYS_SHOW_DEBUG, Unit );
     flags.set( EXCLUSIVE_FOCUS  , Unit );
+    flags.set( DEBUG_LABELS  , Unit );
 
     haxe.Log.trace = function ( message, ?pos ) {
 #if ( devel )

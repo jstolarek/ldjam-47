@@ -88,13 +88,13 @@ class Interactable extends Entity<InteractableState, String> {
         var dist = Math.sqrt(Math.pow(player.cx - cx, 2) + Math.pow(player.cy - cy, 2));
         var newCanInteract = ( dist < interactRadius ? true : false ) && !interactionPerformed;
         if( canInteract != newCanInteract ) {
-            LOGGER.debug( "Interactable status for item " + spriteSheetName + " changed to: " + newCanInteract );
+  //          LOGGER.debug( "Interactable status for item " + spriteSheetName + " changed to: " + newCanInteract );
         }
         return newCanInteract;
     }
 
     function interact( ) {
-        LOGGER.debug( "Interacting with base object!" );
+//        LOGGER.debug( "Interacting with base object!" );
         // do stuff here
     }
 

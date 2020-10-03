@@ -50,6 +50,23 @@ class Utils {
     return (val < min) ? min : (val > max) ? max : val;
   }
 
+  public static function floatToString( n : Float, prec : Int ) {
+    n = Math.round( n * Math.pow( 10, prec ) );
+    var str = '' + n;
+    var len = str.length;
+    if ( len <= prec ) {
+      while( len < prec ) {
+        str = '0' + str;
+        len++;
+      }
+      return '0.' + str;
+    }
+    else {
+      return str.substr( 0, str.length - prec ) + '.' +
+             str.substr( str.length - prec );
+    }
+  }
+
   public static function mkVector2D<T>( height : Int, width : Int )  {
     var vec = new Vector( height );
     for ( y in 0...height ) {
