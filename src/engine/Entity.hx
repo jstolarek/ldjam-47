@@ -37,6 +37,8 @@ package engine;
 class Entity<S,T> extends Process implements Camera.Followable {
   static var LOGGER = HexLog.getLogger();
 
+  public static var ALL : Array<Entity<S,T>> = [];
+
   // rendering layers
   static var _inc = 0;
   public static var MAIN_LAYER  = _inc++;
@@ -58,12 +60,18 @@ class Entity<S,T> extends Process implements Camera.Followable {
   // camera focus point
   public var focusX (get, never) : Float;
   public var focusY (get, never) : Float;
+  // top and down of the entity
+  public var footX (get,never) : Float; inline function get_footX() return (cx+xr)*gx;
+  public var footY (get,never) : Float; inline function get_footY() return (cy+yr)*gy;
+  public var headX (get,never) : Float; inline function get_headX() return footX;
+  public var headY (get,never) : Float; inline function get_headY() return footY-gy;
+  public var radius            : Float = gx*0.5;
 
   // vx, vy - speed
   // frict  - speed attenuation
-  public var vx    : Float = 0.0;
-  public var vy    : Float = 0.0;
-  public var frict : Float = Const.FRICTION;
+  public var vx     : Float = 0.0;
+  public var vy     : Float = 0.0;
+  public var frict  : Float = Const.FRICTION;
 
   // Additional properties for convenience
   public var world (get, never) : World;
@@ -77,6 +85,7 @@ class Entity<S,T> extends Process implements Camera.Followable {
 
   public function new( ?parent : Process ) {
     super( parent );
+    ALL.push(this); // adds itself to the global array of entities - do we need to dispose it later??
 
     cooldown  = new Cooldown<T>( );
     animation = new Animation<S>( );
@@ -91,6 +100,7 @@ class Entity<S,T> extends Process implements Camera.Followable {
 
   override function update( ) {
     animation.update( );
+    checkCollisions();
   }
 
   override function postUpdate( ) {
@@ -101,6 +111,36 @@ class Entity<S,T> extends Process implements Camera.Followable {
     debugLabel.x = animation.pivotX - Std.int( debugLabel.textWidth * 0.5 );
     debugLabel.y = animation.pivotY;
   }
+
+  private inline function checkCollisions() {
+    for(e in ALL) {
+      if( e!=this && e.hasCircColl() && hasCircCollWith(e) && e.hasCircCollWith(this) ) {
+        var d = distPx(e);
+        if( d<=radius+e.radius ) {
+            onTouch(e);
+            e.onTouch(this);
+        }
+      }
+    }
+  }
+
+  private inline function distPx(e: Entity<S, T>) {
+    return Math.sqrt( distSqr(footX,footY,e.footX,e.footY) );
+  }
+
+  private inline function distSqr(ax:Float,ay:Float,bx:Float,by:Float) : Float {
+    return (ax-bx)*(ax-bx) + (ay-by)*(ay-by);
+  }
+
+  function hasCircColl() {
+    return !destroyed;
+  }
+
+  function hasCircCollWith(e:Entity<S, T>) {
+      return true;
+  }
+
+  function onTouch(e: Entity<S, T>) { }
 
   // When overriding update/fixedUpdate function this function has to called to
   // get friction to work

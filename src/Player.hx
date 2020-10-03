@@ -125,6 +125,34 @@ class Player extends Entity<State, String> {
     animation.scaleY = 2;
   }
 
+  override function fixedUpdate( ) {
+    if ( isAction( UP ) ) {
+      vy = -Const.PLAYER_SPEED;
+    }
+
+    if ( isAction( DOWN ) ) {
+      vy = Const.PLAYER_SPEED;
+    }
+
+    if ( isAction( LEFT ) ) {
+      vx = -Const.PLAYER_SPEED;
+    }
+
+    if ( isAction( RIGHT ) ) {
+      vx = Const.PLAYER_SPEED;
+    }
+
+    setDebugLabel( "(x=" + Std.string( Math.floor( x ) ) +
+                  ", y=" + Std.string( Math.floor( y ) ) + ")", 0x66dd99 );
+    // END TEST STUFF
+
+    xr += vx;
+    yr += vy;
+
+    applySpeedFriction( );
+    handleCollisions();
+  }
+
   private inline function setAnimations() : Void {
     // BEGIN TEST STUFF
     animation.stateAnims =
@@ -168,6 +196,10 @@ class Player extends Entity<State, String> {
     } );
   }
 
+  private inline function handleCollisions() : Void {
+
+  }
+
   private inline function resetActions( ) : Void {
     for ( i in 0...actions.length ) {
       actions[ i ] = false;
@@ -177,35 +209,6 @@ class Player extends Entity<State, String> {
   public inline function hasController( ) : Bool {
     return ( controller != null && controller.isConnected( ) &&
             !controller.isDummy( ) );
-  }
-
-  override function fixedUpdate( ) {
-    // BEGIN TEST STUFF
-
-    if ( isAction( UP ) ) {
-      vy = -Const.PLAYER_SPEED;
-    }
-
-    if ( isAction( DOWN ) ) {
-      vy = Const.PLAYER_SPEED;
-    }
-
-    if ( isAction( LEFT ) ) {
-      vx = -Const.PLAYER_SPEED;
-    }
-
-    if ( isAction( RIGHT ) ) {
-      vx = Const.PLAYER_SPEED;
-    }
-
-    setDebugLabel( "(x=" + Std.string( Math.floor( x ) ) +
-                  ", y=" + Std.string( Math.floor( y ) ) + ")", 0x66dd99 );
-    // END TEST STUFF
-
-    xr += vx;
-    yr += vy;
-
-    applySpeedFriction( );
   }
 
   override function update( ) {
