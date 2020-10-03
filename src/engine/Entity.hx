@@ -114,7 +114,7 @@ class Entity<S,T> extends Process implements Camera.Followable {
 
   private inline function checkCollisions() {
     for(e in ALL) {
-      if( e!=this && e.hasCircColl() && hasCircCollWith(e) && e.hasCircCollWith(this) ) {
+      if( e!=this && hasCircCollWith(e) && e.hasCircCollWith(this) ) {
         var d = distPx(e);
         if( d<=radius+e.radius ) {
             onTouch(e);
@@ -132,15 +132,11 @@ class Entity<S,T> extends Process implements Camera.Followable {
     return (ax-bx)*(ax-bx) + (ay-by)*(ay-by);
   }
 
-  function hasCircColl() {
-    return !destroyed;
-  }
-
-  function hasCircCollWith(e:Entity<S, T>) {
+  function hasCircCollWith<S, T>(e:Entity<S, T>) : Bool {
       return true;
   }
 
-  function onTouch(e: Entity<S, T>) { }
+  function onTouch<S, T>(e: Entity<S, T>) : Void { }
 
   // When overriding update/fixedUpdate function this function has to called to
   // get friction to work

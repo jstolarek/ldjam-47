@@ -150,7 +150,6 @@ class Player extends Entity<State, String> {
     yr += vy;
 
     applySpeedFriction( );
-    handleCollisions();
   }
 
   private inline function setAnimations() : Void {
@@ -196,8 +195,9 @@ class Player extends Entity<State, String> {
     } );
   }
 
-  private inline function handleCollisions() : Void {
-
+  override inline function hasCircCollWith<S, T>(e: Entity<S, T>) {
+    if( Std.is(e, Manager) ) return true;
+    return false;
   }
 
   private inline function resetActions( ) : Void {

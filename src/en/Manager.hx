@@ -145,6 +145,15 @@ class Manager extends Entity<ManagerAnimState, Unit> {
 
   }
 
+  override function hasCircCollWith<S, T>(e: Entity<S, T>) : Bool {
+    if( Std.is(e, Player) ) return true;
+    return false;
+  }
+
+  override function onTouch<S, T>(e: Entity<S, T>) {
+    if( Std.is(e, Player) ) LOGGER.info( "LOLOLO!!!" );
+  }
+
   inline function updateDirection( ) : Void {
     direction = Direction.directionTo( x, y,
       patrolPath[ target ].x * gx, patrolPath[ target ].y * gy );
