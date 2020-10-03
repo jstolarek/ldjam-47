@@ -13,6 +13,8 @@
 // Entities read grid size from the current level.  This means that a current
 // level must be set before Entities are used.
 
+import en.Manager; //FIXME: force compilation
+
 class Boot extends Process {
   public static var ME : Boot = null;
          static var LOGGER    = HexLog.getLogger();

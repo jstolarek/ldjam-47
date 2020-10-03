@@ -2,6 +2,7 @@
 import assets.*;
 import common.*;
 import common.Types;
+import en.*;
 import engine.*;
 import input.*;
 import ui.*;
