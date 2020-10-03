@@ -48,11 +48,10 @@ class Boot extends Process {
     // See Note [World before entities]
     world = new World( this );
     showChild( world, WORLD_LAYER );
-    OGMOUtils.loadWorld(   hxd.Res.test.testlevels
-                       , [ hxd.Res.test.levels.level_1
-                         , hxd.Res.test.levels.level_2 ]
+    OGMOUtils.loadWorld(   hxd.Res.office
+                       , [ hxd.Res.levels.open_space_1 ]
                        , world );
-    world.setCurrentLevel( LevelName.TEST_ROOM_1 );
+    world.setCurrentLevel( LevelName.OPEN_SPACE_1 );
 
     player = new Player( );
     layers.add( player.layers, ENTITY_LAYER );

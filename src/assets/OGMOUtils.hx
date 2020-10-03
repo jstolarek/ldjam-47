@@ -33,7 +33,8 @@ class OGMOUtils {
   // See Note [OGMO level constants]
   static var layerCallbacks : Map<String, LayerCallback> =
     [ Const.LAYER_BG    => loadBackgroundLayer
-    , Const.LAYER_COLLS => loadCollisionsLayer ];
+    , Const.LAYER_COLLS => loadCollisionsLayer
+    , Const.LAYER_FG    => loadForegroundLayer ];
 
   function new( ) { }
 
@@ -127,5 +128,32 @@ class OGMOUtils {
           Collision.fromString( collisionsLayout[ y ][ x ] ) );
       }
     }
+  }
+
+  static function loadForegroundLayer( tileset : TileSet
+                                     , layer   : ogmo.Level.LayerDefinition
+                                     , level   : Level ) : Void {
+    LOGGER.debug( "Loading foreground layer" );
+
+    if ( layer.data2D == null ) {
+      throw new OGMOUtilsException( "No data2D in foreground layer for level "
+                                  + level.displayName );
+    }
+
+    var levelLayout : Array<Array<Int>> = layer.data2D;
+    var foreground = new h2d.TileGroup( tileset.tile );
+    foreground.x += layer.offsetX;
+    foreground.y += layer.offsetY;
+
+    for ( y in 0...levelLayout.length ) {
+      for ( x in 0...levelLayout[ y ].length ) {
+        if ( levelLayout[ y ][ x ] > -1 ) {
+          foreground.add( x * layer.gridCellWidth
+                        , y * layer.gridCellHeight
+                        , tileset.getTile( levelLayout[ y ][ x ] ) );
+        }
+      }
+    }
+    level.setForeground( foreground );
   }
 }

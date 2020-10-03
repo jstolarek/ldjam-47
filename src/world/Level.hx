@@ -6,11 +6,13 @@ class Level extends Process {
   // rendering layers
   static var _inc = 0;
   public static var BG_LAYER = _inc++;
+  public static var FG_LAYER = _inc++;
 
   public var name        (default, null  ) : LevelName;
   public var displayName (default, null  ) : String;
          var collisions                    : Vector<Vector<Collision>>;
          var background                    : h2d.Object;
+         var foreground                    : h2d.Object;
   public var height      (default, set   ) : Int = -1;
   public var width       (default, set   ) : Int = -1;
   public var gridX       (default, set   ) : Int = -1;
@@ -50,6 +52,13 @@ class Level extends Process {
 
     this.background = background;
     layers.add( background, BG_LAYER );
+  }
+
+  public function setForeground( foreground : h2d.Object ) : Void {
+    assert( this.foreground == null );
+
+    this.foreground = foreground;
+    layers.add( foreground, FG_LAYER );
   }
 
   public function set_height( height : Int ) : Int {

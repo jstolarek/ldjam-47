@@ -32,6 +32,7 @@ class Const {
   // Layer names
   public static inline var LAYER_BG    = "background";
   public static inline var LAYER_COLLS = "collisions";
+  public static inline var LAYER_FG    = "foreground";
   // Custom values available for levels
   public static inline var LEVEL_FIELD_NAME         = "name";
   public static inline var LEVEL_FIELD_DISPLAY_NAME = "display_name";
