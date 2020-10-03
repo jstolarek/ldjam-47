@@ -142,8 +142,8 @@ class Player extends Entity<State, String> {
       vx = Const.PLAYER_SPEED;
     }
 
-    setDebugLabel( "(x=" + Std.string( Math.floor( x ) ) +
-                  ", y=" + Std.string( Math.floor( y ) ) + ")", 0x66dd99 );
+    //setDebugLabel( "(x=" + Std.string( Math.floor( x ) ) +
+    //              ", y=" + Std.string( Math.floor( y ) ) + ")", 0x66dd99 );
     // END TEST STUFF
 
     xr += vx;

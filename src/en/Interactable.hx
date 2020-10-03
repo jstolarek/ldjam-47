@@ -74,8 +74,8 @@ class Interactable extends Entity<InteractableState, String> {
     }
 
     override function fixedUpdate( ) {
-        setDebugLabel(  "(" + Std.string( Math.floor( x ) ) +
-                        "," + Std.string( Math.floor( y ) ) + ") " + interactionPerformed , 0x66dd99 );
+        //setDebugLabel(  "(" + Std.string( Math.floor( x ) ) +
+        //                "," + Std.string( Math.floor( y ) ) + ") " + interactionPerformed , 0x66dd99 );
         canInteract = checkCanInteract();
         if (interactionPerformed) return;
         if (canInteract && player.isAction( ATTACK )) {
