@@ -98,7 +98,7 @@ class Player extends Entity<State, String> {
     // BEGIN TEST STUFF
     animation.stateAnims =
       Aseprite.loadStateAnimation( "test/mai", State.fromString );
-    animation.pivot = new Animation.Pivot( 0.5, 0.75, true );
+    animation.pivot = new Animation.Pivot( 0.25, 0.375, true );
 
     // starting coordinates
     cx = 6;
