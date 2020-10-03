@@ -6,7 +6,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 287, "y": 287, "w": 70, "h": 100 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_1.aseprite",
@@ -15,7 +15,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 293, "y": 279, "w": 62, "h": 108 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_2.aseprite",
@@ -24,7 +24,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 299, "y": 275, "w": 45, "h": 109 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_3.aseprite",
@@ -33,7 +33,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 304, "y": 275, "w": 44, "h": 111 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_4.aseprite",
@@ -42,7 +42,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 295, "y": 277, "w": 57, "h": 109 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_5.aseprite",
@@ -51,7 +51,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 280, "y": 281, "w": 71, "h": 106 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_6.aseprite",
@@ -60,7 +60,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 278, "y": 291, "w": 65, "h": 96 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_7.aseprite",
@@ -69,7 +69,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 294, "w": 68, "h": 93 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_8.aseprite",
@@ -78,7 +78,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 291, "w": 67, "h": 96 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_9.aseprite",
@@ -87,7 +87,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 290, "w": 66, "h": 97 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_10.aseprite",
@@ -96,7 +96,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 289, "w": 66, "h": 98 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_11.aseprite",
@@ -105,7 +105,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 289, "w": 66, "h": 98 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_12.aseprite",
@@ -114,7 +114,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 291, "w": 66, "h": 96 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_13.aseprite",
@@ -123,7 +123,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 294, "w": 66, "h": 93 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_14.aseprite",
@@ -132,7 +132,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 295, "w": 66, "h": 92 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_15.aseprite",
@@ -141,7 +141,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 293, "w": 66, "h": 94 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_16.aseprite",
@@ -150,7 +150,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 291, "w": 66, "h": 96 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_17.aseprite",
@@ -159,7 +159,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 289, "w": 66, "h": 98 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_18.aseprite",
@@ -168,7 +168,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 288, "w": 67, "h": 99 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_19.aseprite",
@@ -177,7 +177,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 288, "w": 67, "h": 99 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_20.aseprite",
@@ -186,7 +186,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 291, "w": 67, "h": 96 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_21.aseprite",
@@ -195,7 +195,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 294, "w": 68, "h": 93 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    },
    {
     "filename": "mai_22.aseprite",
@@ -204,12 +204,12 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 286, "y": 295, "w": 68, "h": 92 },
     "sourceSize": { "w": 640, "h": 512 },
-    "duration": 80
+    "duration": 100
    }
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.25-x64",
+  "version": "1.2.17-x64",
   "image": "mai.png",
   "format": "I8",
   "size": { "w": 347, "h": 497 },
@@ -217,6 +217,9 @@
   "frameTags": [
    { "name": "walk", "from": 0, "to": 6, "direction": "forward" },
    { "name": "idle", "from": 7, "to": 22, "direction": "forward" }
+  ],
+  "slices": [
+   { "name": "collision", "color": "#0000ffff", "keys": [{ "frame": 19, "bounds": {"x": 298, "y": 288, "w": 47, "h": 97 } }] }
   ]
  }
 }
