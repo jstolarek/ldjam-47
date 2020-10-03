@@ -19,6 +19,7 @@ class Level extends Process {
   public var gridY       (default, set   ) : Int = -1;
   public var pixelHeight (get    , never ) : Int;
   public var pixelWidth  (get    , never ) : Int;
+         var managers                      : Array<Manager> = [];
 
   public function new( name        : LevelName
                      , displayName : String
@@ -28,6 +29,11 @@ class Level extends Process {
     this.displayName = displayName;
     this.collisions  = null;
     this.background  = null;
+  }
+
+  public inline function addManager( manager : Manager ) : Void {
+    managers.push( manager );
+    Boot.ME.layers.add( manager.layers, Boot.ENTITY_LAYER );
   }
 
   // Collision management

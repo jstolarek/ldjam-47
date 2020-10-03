@@ -64,6 +64,11 @@ class Boot extends Process {
     hud = new Hud( );
     hud.show( GUI_LAYER );
 
+    world.currentLevel.addManager( new Manager( world.currentLevel, 1, 1,
+        [ { x : 6, y : 1 }, { x : 6, y : 5 }
+        , { x : 0, y : 5 }, { x : 0, y : 1 } ]
+      ) );
+
     // Create debugging console, plug directly to top-level scene
     var consoleLayer = new h2d.Object( );
     Main.ME.s2d.add( consoleLayer, CONSOLE_LAYER );
