@@ -29,7 +29,9 @@ package common;
 class Const {
 
   // LDJAM-47 GAME CONSTANTS
-  public static inline var PLAYER_SPEED = 0.15;
+  public static inline var PLAYER_SPEED          = 0.15;
+  public static inline var MANAGER_BASE_SPEED    = 0.12;
+  public static inline var MANAGER_ALARMED_SPEED = 0.15;
 
   // OGMO CONSTANTS.  See Note [OGMO level constants]
   // Layer names
