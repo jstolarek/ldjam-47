@@ -74,7 +74,7 @@ typedef InputScheme<T> =
   , attack : T
   }
 
-class Player extends Entity<State, Action> {
+class Player extends Entity<State, String> {
   static var LOGGER = HexLog.getLogger( );
 
   // Player input
