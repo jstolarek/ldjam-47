@@ -37,6 +37,13 @@ class Utils {
     return Math.sqrt( x * x + y * y );
   }
 
+  // Angle from one point to another
+  public static inline function angleTo( fromX : Float, fromY : Float
+                                       , toX   : Float, toY   : Float ) : Float
+  {
+    return Math.atan2( toY - fromY, toX - fromX );
+  }
+
   // Restrict val to range [min, max]
   public static inline function fclamp( val : Float, min : Float
                                       , max : Float ) : Float {
