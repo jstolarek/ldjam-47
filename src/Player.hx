@@ -16,8 +16,7 @@ enum abstract Action(Int) from Int to Int {
   var DOWN;
   var LEFT;
   var RIGHT;
-  var JUMP;
-  var ATTACK;
+  var ATTACK; //maybe later: interact
 
   public static inline var length : Int = 6;
 
@@ -28,7 +27,6 @@ enum abstract Action(Int) from Int to Int {
       case DOWN   : return "DOWN"  ;
       case LEFT   : return "LEFT"  ;
       case RIGHT  : return "RIGHT" ;
-      case JUMP   : return "JUMP"  ;
       case ATTACK : return "ATTACK";
       default     :
         throw new PlayerException( "Unrecognised player action: " + this );
@@ -37,17 +35,26 @@ enum abstract Action(Int) from Int to Int {
 }
 
 // list of states a player can be in
+// walk left is a mirror reflection of right
 enum abstract State(Int) from Int to Int {
   var IDLE;
-  var WALK;
+  var WALK_UP;
+  var WALK_DOWN;
+  var WALK_RIGHT;
+  var WALK_UP_RIGHT;
+  var WALK_DOWN_RIGHT;
 
   public static inline var length : Int = 2;
 
   @:to
   public function toString( ) : String {
     switch ( this ) {
-      case IDLE : return "idle";
-      case WALK : return "walk";
+      case IDLE            : return "idle";
+      case WALK_UP         : return "walk_up";
+      case WALK_DOWN       : return "walk_down";
+      case WALK_RIGHT      : return "walk_right";
+      case WALK_UP_RIGHT   : return "walk_up_right";
+      case WALK_DOWN_RIGHT : return "walk_down_right";
       default   :
         throw new PlayerException( "Unrecognised player state: " + this );
     }
@@ -56,14 +63,17 @@ enum abstract State(Int) from Int to Int {
   @:from
   public static function fromString( str : String ) : State {
     switch ( str ) {
-      case "idle" : return IDLE;
-      case "walk" : return WALK;
+      case "idle": return IDLE;
+      case "walk_up": return WALK_UP;
+      case "walk_down": return WALK_DOWN;
+      case "walk_right": return WALK_RIGHT;
+      case "walk_up_right": return WALK_UP_RIGHT;
+      case "walk_down_right": return WALK_DOWN_RIGHT;
       default   :
         throw new PlayerException( "Unrecognised player state: " + str );
     }
   }
 }
-
 
 typedef InputScheme<T> =
   { up     : T
@@ -81,6 +91,7 @@ class Player extends Entity<State, String> {
   public var keyInputs  : InputScheme<Int>;
   public var padInputs  : InputScheme<Controller.PadKey>;
   public var controller : Controller;
+         var direction  : Direction;
          var actions    : Vector<Bool>;
 
   // Properties for convenience
@@ -95,18 +106,47 @@ class Player extends Entity<State, String> {
     actions    = new Vector<Bool>( Action.length );
     resetActions( );
 
+    setAnimations();
+  }
+
+  private inline function setAnimations() : Void {
     // BEGIN TEST STUFF
     animation.stateAnims =
-      Aseprite.loadStateAnimation( "test/mai", State.fromString );
-    animation.pivot = new Animation.Pivot( 0.25, 0.375, true );
+      Aseprite.loadStateAnimation( "player", State.fromString );
+    animation.pivot = new Animation.Pivot( 0.5, 0.75, true );
 
     // starting coordinates
     cx = 6;
     cy = 8;
 
-    animation.registerStateAnimation( WALK, 1, function ( ) {
+    spr.anim.registerStateAnim("hero-walk-up", 3, 0.4, function() return isWalk() && direction == UP );
+    spr.anim.registerStateAnim("hero-walk-diagonal-top-right", 3, 0.4, function() return isWalk() && (direction == UP_RIGHT || direction == UP_LEFT ));
+    spr.anim.registerStateAnim("hero-walk-right", 3, 0.4, function() return isWalk() && (direction == RIGHT || direction == LEFT ));
+    spr.anim.registerStateAnim("hero-walk-diagonal-down-right", 3, 0.4, function() return isWalk() && (direction == DOWN_RIGHT || direction == DOWN_LEFT ));
+    spr.anim.registerStateAnim("hero-walk-down", 3, 0.4, function() return isWalk() && direction == DOWN );
+    spr.anim.registerStateAnim("hero-idle", 2, 0.1, function() return isIdle() );
+    spr.anim.registerStateAnim("skull", 1, 0.2, function() return isDead() );
+
+    animation.registerStateAnimation( WALK_UP, 1, function ( ) {
+      return;
+    } );
+
+    animation.registerStateAnimation( WALK_DOWN, 1, function ( ) {
+      return actions[ LEFT ] || actions[ RIGHT ];
+    } );
+
+    animation.registerStateAnimation( WALK_RIGHT, 1, function ( ) {
+      return actions[ LEFT ] || actions[ RIGHT ];
+    } );
+
+    animation.registerStateAnimation( WALK_UP_RIGHT, 1, function ( ) {
         return actions[ LEFT ] || actions[ RIGHT ];
       } );
+
+    animation.registerStateAnimation( WALK_DOWN_RIGHT, 1, function ( ) {
+      return actions[ LEFT ] || actions[ RIGHT ];
+    } );
+
     animation.registerStateAnimation( IDLE, 0, function ( ) {
         return true;
       } );
