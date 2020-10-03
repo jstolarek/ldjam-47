@@ -3,6 +3,8 @@ package common;
 class DirectionException extends haxe.Exception {}
 
 enum abstract Direction(Int) from Int to Int {
+  static var LOGGER = HexLog.getLogger();
+
   var UP         = 0;
   var UP_RIGHT   = 1;
   var RIGHT      = 2;
@@ -43,7 +45,7 @@ enum abstract Direction(Int) from Int to Int {
       direction = UP;
     } else if ( angle < -5/8 * Math.PI && angle >= -7/8 * Math.PI ) {
       direction = UP_LEFT;
-    } else if ( angle < -7/8 * Math.PI ) {
+    } else if ( angle < -7/8 * Math.PI || angle > 7/8 * Math.PI ) {
       direction = LEFT;
     } else if ( angle > 1/8 * Math.PI && angle <= 3/8 * Math.PI ) {
       direction = DOWN_RIGHT;

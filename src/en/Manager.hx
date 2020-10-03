@@ -122,7 +122,7 @@ class Manager extends Entity<ManagerAnimState, Unit> {
     var xModifier = Direction.xModifier( direction );
     var yModifier = Direction.yModifier( direction );
 
-    var angle = Utils.angleTo( x, y, (target.x) * gx, (target.y) * gx );
+    var angle = Utils.angleTo( x, y, target.x * gx, target.y * gx );
 
     vx = Math.cos( angle ) * Const.MANAGER_BASE_SPEED;
     vy = Math.sin( angle ) * Const.MANAGER_BASE_SPEED;
@@ -148,6 +148,5 @@ class Manager extends Entity<ManagerAnimState, Unit> {
   inline function updateDirection( ) : Void {
     direction = Direction.directionTo( x, y,
       patrolPath[ target ].x * gx, patrolPath[ target ].y * gy );
-    LOGGER.debug( "Direction set to " + direction );
   }
 }
