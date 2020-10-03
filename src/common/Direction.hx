@@ -37,7 +37,7 @@ enum abstract Direction(Int) from Int to Int {
   }
 
   // Use to flip animation when player facing left
-  public static inline flipDirection ( d : Direction ) : Int {
+  public static inline flipDirection( d : Direction ) : Int {
     var flip = 1;
     if ( d == UP_LEFT || d == LEFT || d == DOWN_LEFT ) {
       flip = -1;
