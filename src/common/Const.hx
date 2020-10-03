@@ -28,6 +28,9 @@ package common;
 
 class Const {
 
+  // LDJAM-47 GAME CONSTANTS
+  public static inline var PLAYER_SPEED = 0.15;
+
   // OGMO CONSTANTS.  See Note [OGMO level constants]
   // Layer names
   public static inline var LAYER_BG    = "background";

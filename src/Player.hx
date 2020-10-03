@@ -111,7 +111,9 @@ class Player extends Entity<State, String> {
         return true;
       } );
 
-    // END TEST STUFF
+    // FIXME: hack for prototyping purposes
+    animation.scaleX = 0.5;
+    animation.scaleY = 0.5;
   }
 
   private inline function resetActions( ) : Void {
@@ -128,19 +130,19 @@ class Player extends Entity<State, String> {
   override function fixedUpdate( ) {
     // BEGIN TEST STUFF
     if ( isAction( UP ) ) {
-      vy = -0.5;
+      vy = -Const.PLAYER_SPEED;
     }
 
     if ( isAction( DOWN ) ) {
-      vy = 0.5;
+      vy = Const.PLAYER_SPEED;
     }
 
     if ( isAction( LEFT ) ) {
-      vx = -0.35;
+      vx = -Const.PLAYER_SPEED;
     }
 
     if ( isAction( RIGHT ) ) {
-      vx = 0.35;
+      vx = Const.PLAYER_SPEED;
     }
 
     setDebugLabel( "(x=" + Std.string( Math.floor( x ) ) +
