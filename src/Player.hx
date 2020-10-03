@@ -35,14 +35,17 @@ enum abstract Action(Int) from Int to Int {
 }
 
 // list of states a player can be in
-// walk left is a mirror reflection of right
+// Describes animation state
 enum abstract State(Int) from Int to Int {
   var IDLE;
   var WALK_UP;
   var WALK_DOWN;
   var WALK_RIGHT;
+  var WALK_LEFT;
   var WALK_UP_RIGHT;
+  var WALK_UP_LEFT;
   var WALK_DOWN_RIGHT;
+  var WALK_DOWN_LEFT;
 
   public static inline var length : Int = 2;
 
@@ -53,8 +56,11 @@ enum abstract State(Int) from Int to Int {
       case WALK_UP         : return "walk_up";
       case WALK_DOWN       : return "walk_down";
       case WALK_RIGHT      : return "walk_right";
+      case WALK_LEFT       : return "walk_left";
       case WALK_UP_RIGHT   : return "walk_up_right";
+      case WALK_UP_LEFT   : return "walk_up_left";
       case WALK_DOWN_RIGHT : return "walk_down_right";
+      case WALK_DOWN_LEFT : return "walk_down_left";
       default   :
         throw new PlayerException( "Unrecognised player state: " + this );
     }
@@ -67,8 +73,11 @@ enum abstract State(Int) from Int to Int {
       case "walk_up": return WALK_UP;
       case "walk_down": return WALK_DOWN;
       case "walk_right": return WALK_RIGHT;
+      case "walk_left": return WALK_LEFT;
       case "walk_up_right": return WALK_UP_RIGHT;
+      case "walk_up_left": return WALK_UP_LEFT;
       case "walk_down_right": return WALK_DOWN_RIGHT;
+      case "walk_down_left": return WALK_DOWN_LEFT;
       default   :
         throw new PlayerException( "Unrecognised player state: " + str );
     }
@@ -104,9 +113,16 @@ class Player extends Entity<State, String> {
     padInputs  = Settings.padInputScheme;
     controller = Controller.getController( );
     actions    = new Vector<Bool>( Action.length );
-    resetActions( );
+    // starting coordinates
+    cx = 6;
+    cy = 8;
 
+    resetActions( );
     setAnimations();
+
+    // FIXME: hack for prototyping purposes
+    animation.scaleX = 2;
+    animation.scaleY = 4;
   }
 
   private inline function setAnimations() : Void {
@@ -115,45 +131,41 @@ class Player extends Entity<State, String> {
       Aseprite.loadStateAnimation( "player", State.fromString );
     animation.pivot = new Animation.Pivot( 0.5, 0.75, true );
 
-    // starting coordinates
-    cx = 6;
-    cy = 8;
-
-    spr.anim.registerStateAnim("hero-walk-up", 3, 0.4, function() return isWalk() && direction == UP );
-    spr.anim.registerStateAnim("hero-walk-diagonal-top-right", 3, 0.4, function() return isWalk() && (direction == UP_RIGHT || direction == UP_LEFT ));
-    spr.anim.registerStateAnim("hero-walk-right", 3, 0.4, function() return isWalk() && (direction == RIGHT || direction == LEFT ));
-    spr.anim.registerStateAnim("hero-walk-diagonal-down-right", 3, 0.4, function() return isWalk() && (direction == DOWN_RIGHT || direction == DOWN_LEFT ));
-    spr.anim.registerStateAnim("hero-walk-down", 3, 0.4, function() return isWalk() && direction == DOWN );
-    spr.anim.registerStateAnim("hero-idle", 2, 0.1, function() return isIdle() );
-    spr.anim.registerStateAnim("skull", 1, 0.2, function() return isDead() );
-
     animation.registerStateAnimation( WALK_UP, 1, function ( ) {
-      return;
+      return actions[ UP ];
     } );
 
     animation.registerStateAnimation( WALK_DOWN, 1, function ( ) {
-      return actions[ LEFT ] || actions[ RIGHT ];
+      return actions[ DOWN ];
     } );
 
     animation.registerStateAnimation( WALK_RIGHT, 1, function ( ) {
-      return actions[ LEFT ] || actions[ RIGHT ];
+      return actions[ RIGHT ];
+    } );
+
+    animation.registerStateAnimation( WALK_LEFT, 1, function ( ) {
+      return actions[ LEFT ];
     } );
 
     animation.registerStateAnimation( WALK_UP_RIGHT, 1, function ( ) {
-        return actions[ LEFT ] || actions[ RIGHT ];
+        return actions[ UP ] && actions[ RIGHT ];
       } );
 
     animation.registerStateAnimation( WALK_DOWN_RIGHT, 1, function ( ) {
-      return actions[ LEFT ] || actions[ RIGHT ];
+      return actions[ DOWN ] && actions[ RIGHT ];
+    } );
+
+    animation.registerStateAnimation( WALK_UP_LEFT, 1, function ( ) {
+      return actions[ UP ] && actions[ LEFT ];
+    } );
+
+    animation.registerStateAnimation( WALK_DOWN_LEFT, 1, function ( ) {
+      return actions[ DOWN ] && actions[ LEFT ];
     } );
 
     animation.registerStateAnimation( IDLE, 0, function ( ) {
-        return true;
-      } );
-
-    // FIXME: hack for prototyping purposes
-    animation.scaleX = 0.5;
-    animation.scaleY = 0.5;
+      return true;
+    } );
   }
 
   private inline function resetActions( ) : Void {
@@ -169,6 +181,7 @@ class Player extends Entity<State, String> {
 
   override function fixedUpdate( ) {
     // BEGIN TEST STUFF
+
     if ( isAction( UP ) ) {
       vy = -Const.PLAYER_SPEED;
     }
@@ -193,7 +206,6 @@ class Player extends Entity<State, String> {
     yr += vy;
 
     applySpeedFriction( );
-
   }
 
   override function update( ) {
@@ -202,7 +214,6 @@ class Player extends Entity<State, String> {
       actions[ DOWN   ] = isKeyDown( keyInputs.down  , padInputs.down   );
       actions[ LEFT   ] = isKeyDown( keyInputs.left  , padInputs.left   );
       actions[ RIGHT  ] = isKeyDown( keyInputs.right , padInputs.right  );
-      actions[ JUMP   ] = isKeyDown( keyInputs.jump  , padInputs.jump   );
       actions[ ATTACK ] = isKeyDown( keyInputs.attack, padInputs.attack );
     } else {
       resetActions( );

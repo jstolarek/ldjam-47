@@ -16,3 +16,6 @@ res/.tmp
 
 # Game configuration file
 config.json
+
+# VS code project-specific settings
+.vscode/
