@@ -58,12 +58,18 @@ class Manager extends Entity<ManagerAnimState, Unit> {
   var patrolPath : Array<Point> = [];
   var target     : Int          = 0;
   var direction  : Direction    = UP;
-  var line : h2d.Graphics;
+  var sightAngle : Float        = Math.PI / 2;
+  var sightLength: Float        = 8.0;
+  var sightData  : Array<Float> = [];
+  var pieOfSight : h2d.Graphics;
+  var lineofsight : h2d.Graphics;
   var directionChange : Bool;
   var sightDirection : Faces;
+  var player : Player;
 
   public function new( ?parent : Process, startX : Int, startY : Int
-                     , patrolPath : Array<Point> ) {
+                     , patrolPath : Array<Point>
+                     , pl: Player ) {
     super( parent );
 
     cx     = startX;
@@ -72,20 +78,12 @@ class Manager extends Entity<ManagerAnimState, Unit> {
     yr     = 0.0;
     target = 0;
     this.patrolPath = patrolPath;
+    player = pl;
 
+    // [0] x, [1] y, [2] cone length, [3] sight direction, [4] width of the angle
+    sightData =  [0.0, 0.0, sightLength * 16.0, 0.0, sightAngle];
     updateDirection( );
-    // updateFacingDirections();
-
-    var front = [0.0, 0.0, 0.0, 0.0];
-    if(direction == RIGHT) {
-      front = [gx, gy*0.5, 100, 4];
-    }
-
-    line = new h2d.Graphics();
-    line.beginFill(0xF000FFFF);
-    line.drawRect(front[0], front[1], front[2], front[3]);
-    line.endFill();
-    layers.add(line, Entity.MAIN_LAYER);
+    updateSight( );
 
     animation.stateAnims =
       Aseprite.loadStateAnimation( "player", ManagerAnimState.fromString );
@@ -155,8 +153,13 @@ class Manager extends Entity<ManagerAnimState, Unit> {
 
       nextTarget( );
       updateDirection( );
-      updateSight();
+      updateSight( );
     }
+
+    if( checkIfPlayerInSight( ) ) {
+      noticePlayer( );
+    }
+
   }
 
   override function hasCircCollWith<S, T>(e: Entity<S, T>) : Bool {
@@ -166,7 +169,7 @@ class Manager extends Entity<ManagerAnimState, Unit> {
 
   override function onTouch<S, T>(e: Entity<S, T>) {
     //if( Std.is(e, Player) ) LOGGER.info( "LOLOLO!!!" );
-    line.remove();
+    pieOfSight.remove();
   }
 
   inline function updateDirection( ) : Void {
@@ -181,22 +184,88 @@ class Manager extends Entity<ManagerAnimState, Unit> {
 
   // NOT WORKING OR TWERKING!!
   inline function updateSight() : Void {
-    if ( directionChange ) {
+    sightData[0] = gx * 0.5;
+    sightData[1] = gx * 0.5;
+    if (directionChange) {
       directionChange = false;
-      line.remove( );
-      var front = [gx, gy*0.5, 100, 4];
+      pieOfSight.remove();
 
-      if ( direction == RIGHT ) {
-        drawDebugLine( front );
+      switch(direction) {
+        // http://www.math.com/tables/graphs/unitcircle.gif but clockwise
+        case UP:
+          sightData[3] = 3 * Math.PI / 2.0;
+        case UP_RIGHT:
+          sightData[3] = 7 * Math.PI / 4.0;
+        case RIGHT:
+          sightData[3] = 0.0;
+        case LEFT:
+          sightData[3] = Math.PI;
+        case DOWN:
+          sightData[3] = Math.PI / 2.0;
+        case DOWN_LEFT:
+          sightData[3] = 3 * Math.PI / 4.0;
+        case DOWN_RIGHT:
+          sightData[3] = Math.PI / 4.0;
+        case UP_LEFT:
+          sightData[3] = 5 * Math.PI / 4.0;
       }
+
+#if ( devel )
+      drawDebugPie( );
+#end
     }
   }
 
-  private inline function drawDebugLine(point) {
-    line = new h2d.Graphics();
-    line.beginFill(0xF000FFFF);
-    line.drawRect(point[0], point[1], point[2], point[3]);
-    line.endFill();
-    layers.add(line, Entity.MAIN_LAYER);
+  private inline function drawDebugPie( ) {
+    pieOfSight = new h2d.Graphics();
+    pieOfSight.beginFill(0xF000FFAA, 0.2);
+    pieOfSight.drawPie(sightData[0], sightData[1], sightData[2], sightData[3]  - sightAngle / 2.0, sightData[4]);
+    pieOfSight.endFill();
+    layers.add(pieOfSight, Entity.MAIN_LAYER);
+  }
+
+  private function checkIfPlayerInSight( ) : Bool {
+    var managerPosLocal = [gx * 0.5, gy * 0.5];
+    var managerPos      = [x + managerPosLocal[0], y + managerPosLocal[1]];
+    var playerPos       = [player.x + player.gx * 0.5, player.y + player.gy * 0.5];
+    var playerToManager = [playerPos[0] - managerPos[0], playerPos[1] - managerPos[1]];
+    var dist = Math.sqrt(Math.pow(playerToManager[0], 2) + Math.pow(playerToManager[1], 2));
+
+    //Line from Manager to Player
+    //drawDebugLine( [managerPos[0], managerPos[1]], [playerPos[0], playerPos[1]], parent.layers );
+    //Line from Manager to Player in Manager's local coordinates
+    //drawDebugLine( [gx * 0.5, gy * 0.5], [playerToManager[0], playerToManager[1]] );
+
+    if( dist < sightData[2] ) {
+      var playerToManagerNormalized = [ (playerToManager[0]) / dist, (playerToManager[1]) / dist]; //normalized vector
+      var managerForwardDirection   = [ Math.cos( sightData[3] ) , Math.sin( sightData[3] ) ];
+      var dotProduct                = playerToManagerNormalized[0] * managerForwardDirection[0]
+                                    + playerToManagerNormalized[1] * managerForwardDirection[1];
+      var angle                     = Math.acos( dotProduct ) * 180.0 / Math.PI;
+      //Line from Manager to Player in Manager's local coordinates
+      //drawDebugLine( [gx * 0.5, gy * 0.5], [playerToManager[0], playerToManager[1]] );
+      //Line showing the front of Manager
+      //drawDebugLine( [managerPosLocal[0], managerPosLocal[1]],
+        //[managerForwardDirection[0] * 200.0 + managerPosLocal[0], managerForwardDirection[1] * 200.0 + managerPosLocal[1]] );
+      if( angle < (hxd.Math.radToDeg(sightAngle)) / 2.0 ) {
+        //LOGGER.debug("Angle: " + angle);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private function drawDebugLine(from : Array<Float>, to : Array<Float>, ?parentLayers : h2d.Layers) {
+    var layersToAttachTo = (parentLayers == null? layers : parentLayers);
+    lineofsight.remove();
+    lineofsight = new h2d.Graphics(Main.ME.s2d);
+    lineofsight.lineStyle(1.0, 0xFF0000, 1.0);
+    lineofsight.moveTo(from[0], from[1]);
+    lineofsight.lineTo(to[0], to[1]);
+    layersToAttachTo.add(lineofsight, Entity.MAIN_LAYER);
+  }
+
+  private function noticePlayer( ) : Void {
+    LOGGER.info( "Player noticed" );
   }
 }

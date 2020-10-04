@@ -80,6 +80,7 @@ class Boot extends Process {
     world.currentLevel.addManager( new Manager( world.currentLevel, 1, 2,
         [ { x : 7, y : 2 }, { x : 7, y : 6 }
         , { x : 1, y : 6 }, { x : 1, y : 2 } ]
+        , player
       ) );
   }
 
