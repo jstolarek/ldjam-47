@@ -39,7 +39,7 @@ enum abstract InteractableState(Int) from Int to Int {
     }
   }
 
-class Interactable extends Entity<InteractableState, String> {
+class Interactable extends Entity<InteractableState, String> implements Resetable  {
     public var spriteSheetName = "key";
 
     public var interactRadius = 2.0;
@@ -98,7 +98,7 @@ class Interactable extends Entity<InteractableState, String> {
         // do stuff here
     }
 
-    function resetItem( ) {
+    public function resetObject() : Void {
         interactionPerformed = false;
     }
 }

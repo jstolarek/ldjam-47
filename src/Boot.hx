@@ -29,6 +29,7 @@ class Boot extends Process {
   // Properties for convenience
   public var player  (default, null) : Player  = null;
   public var world   (default, null) : World   = null;
+  public var levelObjects (default, null) : Array<Resetable> = [];
   public var camera  (default, null) : Camera  = null;
   // debugging console
   public var console (default, null) : Console = null;
@@ -65,11 +66,14 @@ class Boot extends Process {
 
     var coffee = new Coffee( 1, 3, player );
     layers.add( coffee.layers, ENTITY_LAYER );
+    levelObjects.push(coffee);
 
     var key = new Key( 14, 6, player );
     layers.add( key.layers, ENTITY_LAYER );
+    levelObjects.push(key);
 
     layers.add( player.layers, ENTITY_LAYER );
+    levelObjects.push(player);
 
     camera = new Camera( );
     camera.target = player;
@@ -77,11 +81,19 @@ class Boot extends Process {
     hud = new Hud( );
     hud.show( GUI_LAYER );
 
-    world.currentLevel.addManager( new Manager( world.currentLevel, 1, 2,
-        [ { x : 7, y : 2 }, { x : 7, y : 6 }
-        , { x : 1, y : 6 }, { x : 1, y : 2 } ]
-        , player
-      ) );
+    var manager = new Manager( world.currentLevel, 1, 2,
+      [ { x : 7, y : 2 }, { x : 7, y : 6 }
+      , { x : 1, y : 6 }, { x : 1, y : 2 } ]
+      , player
+    );
+    world.currentLevel.addManager( manager );
+    levelObjects.push(manager);
+  }
+
+  public function loopLevel( ) : Void {
+    for ( levelObject in levelObjects ) {
+      levelObject.resetObject();
+    }
   }
 
   override function update( ) {

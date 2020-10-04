@@ -93,7 +93,7 @@ typedef InputScheme<T> =
   , attack : T
   }
 
-class Player extends Entity<State, String> {
+class Player extends Entity<State, String> implements Resetable {
   static var LOGGER = HexLog.getLogger( );
 
   // Player input
@@ -103,6 +103,8 @@ class Player extends Entity<State, String> {
          var direction  : Direction;
          var actions    : Vector<Bool>;
   public var speed      : Float;
+         var startX     : Int = 12;
+         var startY     : Int = 1;
 
   var collisionBox      : Rect;
 
@@ -136,8 +138,8 @@ class Player extends Entity<State, String> {
     working = false;
 
     // starting coordinates
-    cx = 12;
-    cy = 1;
+    cx = startX;
+    cy = startY;
     yr = 0.25;
     speed = Const.PLAYER_SPEED;
 
@@ -357,5 +359,14 @@ class Player extends Entity<State, String> {
 
   inline function get_console( ) : Console {
     return Boot.ME.console;
+  }
+
+  public function resetObject() : Void {
+    unnoticed = true;
+    cx = startX;
+    cy = startY;
+    yr = 0.25;
+    speed = Const.PLAYER_SPEED;
+    resetActions( );
   }
 }

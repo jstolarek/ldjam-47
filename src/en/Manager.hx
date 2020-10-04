@@ -51,7 +51,7 @@ enum abstract ManagerAnimState(Int) from Int to Int {
   }
 }
 
-class Manager extends Entity<ManagerAnimState, String> {
+class Manager extends Entity<ManagerAnimState, String> implements Resetable {
   static var LOGGER = HexLog.getLogger();
 
   var patrolPath : Array<Point> = [];
@@ -60,6 +60,8 @@ class Manager extends Entity<ManagerAnimState, String> {
   var sightAngle : Float        = Math.PI / 4;
   var sightLength: Float        = 8.0;
   var sightData  : Array<Float> = [];
+  var startXPos  : Int          = 0;
+  var startYPos  : Int          = 0;
   var pieOfSight : h2d.Graphics;
   var lineofsight : h2d.Graphics;
   var directionChange : Bool;
@@ -71,15 +73,17 @@ class Manager extends Entity<ManagerAnimState, String> {
                      , pl: Player ) {
     super( parent );
 
-    cx     = startX;
-    cy     = startY;
-    xr     = 0.0;
-    yr     = 0.0;
-    target = 0;
+    cx      = startXPos = startX;
+    cy      = startYPos = startY;
+    xr      = 0.0;
+    yr      = 0.0;
+    target  = 0;
     this.patrolPath = patrolPath;
     player = pl;
     managerText = Aseprite.loadSpriteSheet("speech");
     managerText.y -= 20.0; //h4ckss
+    managerText.visible = false;
+    layers.add(managerText, Entity.MAIN_LAYER);
 
     // [0] x, [1] y, [2] cone length, [3] sight direction, [4] width of the angle
     sightData =  [0.0, 0.0, sightLength * 12.0, 0.0, sightAngle];
@@ -271,11 +275,24 @@ class Manager extends Entity<ManagerAnimState, String> {
   private function noticePlayer( ) : Void {
     player.unnoticed = false;
     animation.paused = true;
-    layers.add(managerText, Entity.MAIN_LAYER);
+    managerText.visible = true;
 
     cooldown.setMs("ending", 3000, function ( ) {
       LOGGER.info("<< GAME RESET >>");
-      managerText.visible = false;
+      Boot.ME.loopLevel();
     });
+  }
+
+  public function resetObject() : Void {
+    cx      = startXPos;
+    cy      = startYPos;
+    xr     = 0.0;
+    yr     = 0.0;
+    target = 0;
+    sightData =  [0.0, 0.0, sightLength * 12.0, 0.0, sightAngle];
+    updateDirection( );
+    updateSight( );
+    animation.paused = false;
+    managerText.visible = false;
   }
 }
