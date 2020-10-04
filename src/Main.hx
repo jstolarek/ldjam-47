@@ -103,8 +103,8 @@ class Main extends hxd.App {
     var traceTarget         = new TraceLogTarget( "", null, traceLogLayout );
 #if ( devel )
     var rootLoggerConfig    = LoggerConfig.createRootLogger( LogLevel.ALL );
-    // v- ENTITY-ONLY DEBUGGING
-    //var rootLoggerConfig    =  LoggerConfig.createLogger( "en", LogLevel.INFO, loggerConfiguration, null );
+    // v- PLAYER-ONLY DEBUGGING (use "en" for managers etc)
+    //var rootLoggerConfig    =  LoggerConfig.createLogger( "Player", LogLevel.DEBUG, loggerConfiguration, null );
 #elseif ( release )
     var rootLoggerConfig    = LoggerConfig.createRootLogger( LogLevel.OFF );
 #end

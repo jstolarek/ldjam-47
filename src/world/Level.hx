@@ -55,6 +55,10 @@ class Level extends Process {
     return isValid( x, y ) && collisions[ y ][ x ] == Collision.DESK;
   }
 
+  public inline function isWithinWorkArea( x : Int, y : Int ) : Bool {
+    return isValid( x, y ) && collisions[ y ][ x ] == Collision.WORK_AREA;
+  }
+
   // Level loading.  These setter functions should not be used once the level is
   // loaded.
   public function setBackground( background : h2d.Object ) : Void {

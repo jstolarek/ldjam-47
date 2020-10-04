@@ -139,7 +139,7 @@ class Manager extends Entity<ManagerAnimState, String> {
 
     var angle = Utils.angleTo( x, y, target.x * gx, target.y * gx );
 
-    if(!checkIfPlayerInSight( )) {
+    if(!checkIfPlayerInSight( ) || player.working) {
       vx = Math.cos( angle ) * Const.MANAGER_BASE_SPEED;
       vy = Math.sin( angle ) * Const.MANAGER_BASE_SPEED;
 
@@ -161,7 +161,7 @@ class Manager extends Entity<ManagerAnimState, String> {
       }
     }
 
-    if( checkIfPlayerInSight( ) && player.unnoticed ) {
+    if( checkIfPlayerInSight( ) && player.unnoticed && !player.working) {
       noticePlayer( );
     }
   }

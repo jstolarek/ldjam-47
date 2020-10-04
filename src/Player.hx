@@ -123,6 +123,7 @@ class Player extends Entity<State, String> {
   var console (get, never) : Console;
 
   public var unnoticed     : Bool;
+  public var working     : Bool;
 
   public function new( ?parent : Process ) {
     super( parent );
@@ -132,6 +133,8 @@ class Player extends Entity<State, String> {
     controller = Controller.getController( );
     actions    = new Vector<Bool>( Action.length );
     unnoticed = true;
+    working = false;
+
     // starting coordinates
     cx = 12;
     cy = 1;
@@ -199,7 +202,7 @@ class Player extends Entity<State, String> {
     }
 
     handleCollisions( );
-
+    checkIfWorking( );
 //    applySpeedFriction( );
   }
 
@@ -288,6 +291,22 @@ class Player extends Entity<State, String> {
 //      xr = 0.2;
     }
 
+  }
+
+  private inline function checkIfWorking( ) : Void {
+    var atTheDesk = false;
+
+    var collison_upper = level.isWithinWorkArea( leftCx , upCx ) || level.isWithinWorkArea( rightCx, upCx);
+    var collision_lower = level.isWithinWorkArea( leftCx , downCx ) || level.isWithinWorkArea( rightCx, downCx);
+    var collision_left = level.isWithinWorkArea( leftCx, downCx ) || level.isWithinWorkArea( leftCx, upCx);
+    var collision_right = level.isWithinWorkArea( rightCx, downCx ) || level.isWithinWorkArea( rightCx, upCx);
+
+
+    if (collison_upper || collision_lower || collision_left || collision_right) {
+        atTheDesk = true;
+    }
+
+    working = atTheDesk;
   }
 
   private inline function resetActions( ) : Void {
