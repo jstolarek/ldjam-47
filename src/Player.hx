@@ -103,6 +103,8 @@ class Player extends Entity<State, String> {
          var direction  : Direction;
          var actions    : Vector<Bool>;
 
+  var collisionBox      : Rect;
+
   // Properties for convenience
   var console (get, never) : Console;
 
@@ -120,8 +122,19 @@ class Player extends Entity<State, String> {
     cx = 6;
     cy = 8;
 
+    collisionBox = { x : 6, y : 24, w : 19, h : 7 };
+
     resetActions( );
     setAnimations();
+
+#if ( devel )
+    var collisionBoxRect = new h2d.Graphics( );
+    collisionBoxRect.beginFill( 0xFFFF0000 );
+    collisionBoxRect.drawRect( collisionBox.x, collisionBox.y
+                             , collisionBox.w, collisionBox.h );
+    collisionBoxRect.endFill( );
+    layers.add( collisionBoxRect, Entity.DEBUG_LAYER );
+#end
   }
 
   override function fixedUpdate( ) {
@@ -145,10 +158,11 @@ class Player extends Entity<State, String> {
                   ", y=" + Utils.floatToString( cy + yr, 2 ) + ")", 0x66dd99 );
     // END TEST STUFF
 
+
     xr += vx;
     yr += vy;
-
     handleCollisions( );
+
     applySpeedFriction( );
   }
 
@@ -156,7 +170,7 @@ class Player extends Entity<State, String> {
     // BEGIN TEST STUFF
     animation.stateAnims =
       Aseprite.loadStateAnimation( "player", State.fromString );
-    animation.pivot = new Animation.Pivot( 0.5, 1, true );
+//    animation.pivot = new Animation.Pivot( 0.5, 1, true );
 
     animation.registerStateAnimation( WALK_UP, 1, function ( ) {
       return actions[ UP ];
@@ -201,49 +215,51 @@ class Player extends Entity<State, String> {
   }
 
   private inline function handleCollisions( ) : Void {
-    if ( xr > 0.4 && level.hasDeskCollision( cx + 1, cy ) ) {
-      xr = 0.4;
-      if ( vx > 0 ) {
-        vx /= 4;
-      }
+    var left  = x    + collisionBox.x;
+    var up    = y    + collisionBox.y;
+    var right = left + collisionBox.w;
+    var down  = up   + collisionBox.h;
+
+    var leftCx  : Int = Math.floor( left  / gx );
+    var upCx    : Int = Math.floor( up    / gy );
+    var rightCx : Int = Math.floor( right / gx );
+    var downCx  : Int = Math.floor( down  / gy );
+
+    var leftXr  = (left  - (leftCx  * gx)) / gx;
+    var upYr    = (up    - (upCx    * gy)) / gy;
+    var rightXr = (right - (rightCx * gx)) / gx;
+    var downYr  = (down  - (downCx  * gy)) / gy;
+
+    // if moving up then check collisions of both upper corners
+    if ( vy < 0 && ( level.hasDeskCollision( leftCx , upCx ) ||
+                     level.hasDeskCollision( rightCx, upCx ) ) ) {
+      vy = 0.0; // stop
+//      cy = upCx;
+//      yr = 0.25;
     }
 
-    if ( xr >= 0.3 && level.hasDeskCollision( cx + 1, cy ) ) {
-      if ( vx > 0 ) {
-        vx /= 2;
-      }
-    }
-/*
-*/
-
-    if ( xr < 0.1 && level.hasDeskCollision( cx - 1, cy ) ) {
-      xr = 0.1;
-      if ( vx < 0 ) {
-        vx /= 4;
-      }
+    // if moving down check collisions on both lower corners
+    if ( vy > 0 && ( level.hasDeskCollision( leftCx , downCx ) ||
+                     level.hasDeskCollision( rightCx, downCx ) ) ) {
+      vy = 0.0; // stop
+      cy = downCx - 1;
+      yr = 0.0;
     }
 
-/*
-    if ( xr < 0.4 && level.hasDeskCollision( cx - 1, cy ) ) {
-      if ( vx < 0 ) {
-        vx/=2;
-      }
-    }
-*/
-
-    if ( yr > 0.4 && level.hasDeskCollision( cx, cy + 1 ) ) {
-      yr = 0.4;
-      if ( vy > 0 ) {
-        vy /= 4;
-      }
+    // if moving left check collisions on both left corners
+    if ( vx < 0 && ( level.hasDeskCollision( leftCx, downCx ) ||
+                     level.hasDeskCollision( leftCx, upCx   ) ) ) {
+      vx = 0.0; // stop
+      cx = leftCx;
+      xr = 0.85;
     }
 
-
-    if ( yr < 0.6 && level.hasDeskCollision( cx, cy ) ) {
-      yr = 0.6;
-      if ( vy < 0 ) {
-        vy /= 4;
-      }
+    // if moving right check collisions on both right corners
+    if ( vx > 0 && ( level.hasDeskCollision( rightCx, downCx ) ||
+                     level.hasDeskCollision( rightCx, upCx   ) ) ) {
+      vx = 0.0; // stop
+      cx = rightCx - 1;
+      xr = 0.2;
     }
   }
 
