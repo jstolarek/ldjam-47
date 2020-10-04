@@ -48,6 +48,11 @@ class Boot extends Process {
       });
 #end
 
+    // Create debugging console, plug directly to top-level scene
+    var consoleLayer = new h2d.Object( );
+    Main.ME.s2d.add( consoleLayer, CONSOLE_LAYER );
+    console = new Console( Fonts.barlow18, 0xFFFF00, consoleLayer );
+
     // See Note [World before entities]
     world = new World( this );
     showChild( world, WORLD_LAYER );
@@ -76,11 +81,6 @@ class Boot extends Process {
         [ { x : 7, y : 2 }, { x : 7, y : 6 }
         , { x : 1, y : 6 }, { x : 1, y : 2 } ]
       ) );
-
-    // Create debugging console, plug directly to top-level scene
-    var consoleLayer = new h2d.Object( );
-    Main.ME.s2d.add( consoleLayer, CONSOLE_LAYER );
-    console = new Console( Fonts.barlow18, 0xFFFF00, consoleLayer );
   }
 
   override function update( ) {

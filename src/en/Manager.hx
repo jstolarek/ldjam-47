@@ -165,7 +165,7 @@ class Manager extends Entity<ManagerAnimState, Unit> {
   }
 
   override function onTouch<S, T>(e: Entity<S, T>) {
-    if( Std.is(e, Player) ) LOGGER.info( "LOLOLO!!!" );
+    //if( Std.is(e, Player) ) LOGGER.info( "LOLOLO!!!" );
     line.remove();
   }
 
