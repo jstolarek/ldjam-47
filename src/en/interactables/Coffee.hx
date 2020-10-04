@@ -9,7 +9,13 @@ class Coffee extends Interactable {
     }
 
     override function interact( ) {
-        LOGGER.debug( "Have a tasty coffee!!" );
+        LOGGER.debug( "Activating coffee boost" );
+        Boot.ME.player.speed *= Const.COFFEE_SPEED_BOOST_FACTOR;
+        Boot.ME.player.cooldown.setMs( "coffee", Const.COFFEE_BOOST_DURATION,
+          function ( ) {
+            LOGGER.debug( "Coffee boost finished" );
+            Boot.ME.player.speed = Const.PLAYER_SPEED;
+          } );
     }
 
 }

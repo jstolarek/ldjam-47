@@ -33,6 +33,8 @@ class Const {
   public static inline var MANAGER_BASE_SPEED      = 0.12;
   public static inline var MANAGER_ALARMED_SPEED   = 0.15;
   public static inline var MANAGER_TARGET_DEADZONE = 2;
+  public static inline var COFFEE_SPEED_BOOST_FACTOR = 2;
+  public static inline var COFFEE_BOOST_DURATION   = 5000; // in miliseconds
 
   // OGMO CONSTANTS.  See Note [OGMO level constants]
   // Layer names

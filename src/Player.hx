@@ -102,6 +102,7 @@ class Player extends Entity<State, String> {
   public var controller : Controller;
          var direction  : Direction;
          var actions    : Vector<Bool>;
+  public var speed      : Float;
 
   var collisionBox      : Rect;
 
@@ -135,6 +136,7 @@ class Player extends Entity<State, String> {
     cx = 12;
     cy = 1;
     yr = 0.25;
+    speed = Const.PLAYER_SPEED;
 
     collisionBox = { x : 6, y : 24, w : 19, h : 7 };
 
@@ -156,25 +158,25 @@ class Player extends Entity<State, String> {
 
     if ( isAction( UP ) ) {
       if ( y > 0 ) {
-        vy = -Const.PLAYER_SPEED;
+        vy = -speed;
       }
     }
 
     if ( isAction( DOWN ) ) {
       if ( y < ( level.height - 1 ) * gy ) {
-        vy = Const.PLAYER_SPEED;
+        vy = speed;
       }
     }
 
     if ( isAction( LEFT ) ) {
       if ( x > 0 ) {
-        vx = -Const.PLAYER_SPEED;
+        vx = -speed;
       }
     }
 
     if ( isAction( RIGHT ) ) {
       if ( x < ( level.width - 1 ) * gx ) {
-        vx = Const.PLAYER_SPEED;
+        vx = speed;
       }
     }
 
