@@ -100,6 +100,7 @@ class Entity<S,T> extends Process implements Camera.Followable {
 
   override function update( ) {
     animation.update( );
+    cooldown.update( Process.TMOD );
     checkCollisions();
   }
 

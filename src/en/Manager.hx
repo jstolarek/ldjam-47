@@ -29,7 +29,7 @@ enum abstract ManagerAnimState(Int) from Int to Int {
       case WALK_LEFT       : return "walk_left";
       case WALK_UP_LEFT    : return "walk_up_left";
       default :
-        throw new ManagerException( "Unrecognised player state: " + this );
+        throw new ManagerException( "Unrecognised manager state: " + this );
     }
   }
 
@@ -46,26 +46,25 @@ enum abstract ManagerAnimState(Int) from Int to Int {
       case "walk_left"       : return WALK_LEFT;
       case "walk_up_left"    : return WALK_UP_LEFT;
       default :
-        throw new ManagerException( "Unrecognised player state: " + str );
+        throw new ManagerException( "Unrecognised manager state: " + str );
     }
   }
 }
 
-typedef Faces = { front: Point, side: Point};
-class Manager extends Entity<ManagerAnimState, Unit> {
+class Manager extends Entity<ManagerAnimState, String> {
   static var LOGGER = HexLog.getLogger();
 
   var patrolPath : Array<Point> = [];
   var target     : Int          = 0;
   var direction  : Direction    = UP;
-  var sightAngle : Float        = Math.PI / 2;
+  var sightAngle : Float        = Math.PI / 4;
   var sightLength: Float        = 8.0;
   var sightData  : Array<Float> = [];
   var pieOfSight : h2d.Graphics;
   var lineofsight : h2d.Graphics;
   var directionChange : Bool;
-  var sightDirection : Faces;
   var player : Player;
+  var managerText : h2d.Object;
 
   public function new( ?parent : Process, startX : Int, startY : Int
                      , patrolPath : Array<Point>
@@ -79,9 +78,11 @@ class Manager extends Entity<ManagerAnimState, Unit> {
     target = 0;
     this.patrolPath = patrolPath;
     player = pl;
+    managerText = Aseprite.loadSpriteSheet("speech");
+    managerText.y -= 20.0; //h4ckss
 
     // [0] x, [1] y, [2] cone length, [3] sight direction, [4] width of the angle
-    sightData =  [0.0, 0.0, sightLength * 16.0, 0.0, sightAngle];
+    sightData =  [0.0, 0.0, sightLength * 12.0, 0.0, sightAngle];
     updateDirection( );
     updateSight( );
 
@@ -130,36 +131,39 @@ class Manager extends Entity<ManagerAnimState, Unit> {
   }
 
   override public function fixedUpdate( ) {
+    super.fixedUpdate( );
+
     var target    = getTarget( );
     var xModifier = Direction.xModifier( direction );
     var yModifier = Direction.yModifier( direction );
 
     var angle = Utils.angleTo( x, y, target.x * gx, target.y * gx );
 
-    vx = Math.cos( angle ) * Const.MANAGER_BASE_SPEED;
-    vy = Math.sin( angle ) * Const.MANAGER_BASE_SPEED;
+    if(!checkIfPlayerInSight( )) {
+      vx = Math.cos( angle ) * Const.MANAGER_BASE_SPEED;
+      vy = Math.sin( angle ) * Const.MANAGER_BASE_SPEED;
 
-    xr += vx;
-    yr += vy;
+      xr += vx;
+      yr += vy;
 
-    var target_dist = Utils.dist( x, y, target.x * gx, target.y * gy );
-    if ( target_dist < Const.MANAGER_TARGET_DEADZONE ) {
-      cx = target.x;
-      cy = target.y;
-      xr = 0.0;
-      yr = 0.0;
-      vx = 0.0;
-      vy = 0.0;
+      var target_dist = Utils.dist( x, y, target.x * gx, target.y * gy );
+      if ( target_dist < Const.MANAGER_TARGET_DEADZONE ) {
+        cx = target.x;
+        cy = target.y;
+        xr = 0.0;
+        yr = 0.0;
+        vx = 0.0;
+        vy = 0.0;
 
-      nextTarget( );
-      updateDirection( );
-      updateSight( );
+        nextTarget( );
+        updateDirection( );
+        updateSight( );
+      }
     }
 
-    if( checkIfPlayerInSight( ) ) {
+    if( checkIfPlayerInSight( ) && player.unnoticed ) {
       noticePlayer( );
     }
-
   }
 
   override function hasCircCollWith<S, T>(e: Entity<S, T>) : Bool {
@@ -168,8 +172,8 @@ class Manager extends Entity<ManagerAnimState, Unit> {
   }
 
   override function onTouch<S, T>(e: Entity<S, T>) {
-    //if( Std.is(e, Player) ) LOGGER.info( "LOLOLO!!!" );
     pieOfSight.remove();
+    noticePlayer( );
   }
 
   inline function updateDirection( ) : Void {
@@ -182,7 +186,6 @@ class Manager extends Entity<ManagerAnimState, Unit> {
     }
   }
 
-  // NOT WORKING OR TWERKING!!
   inline function updateSight() : Void {
     sightData[0] = gx * 0.5;
     sightData[1] = gx * 0.5;
@@ -266,6 +269,13 @@ class Manager extends Entity<ManagerAnimState, Unit> {
   }
 
   private function noticePlayer( ) : Void {
-    LOGGER.info( "Player noticed" );
+    player.unnoticed = false;
+    animation.paused = true;
+    layers.add(managerText, Entity.MAIN_LAYER);
+
+    cooldown.setMs("ending", 3000, function ( ) {
+      LOGGER.info("<< GAME RESET >>");
+      managerText.visible = false;
+    });
   }
 }

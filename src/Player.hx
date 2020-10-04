@@ -106,6 +106,8 @@ class Player extends Entity<State, String> {
   // Properties for convenience
   var console (get, never) : Console;
 
+  public var unnoticed     : Bool;
+
   public function new( ?parent : Process ) {
     super( parent );
 
@@ -113,7 +115,8 @@ class Player extends Entity<State, String> {
     padInputs  = Settings.padInputScheme;
     controller = Controller.getController( );
     actions    = new Vector<Bool>( Action.length );
-    // starting coordinates
+    unnoticed = true;
+
     cx = 6;
     cy = 8;
 
@@ -256,7 +259,7 @@ class Player extends Entity<State, String> {
   }
 
   override function update( ) {
-    if ( !(console.isActive( ) && console.hasFlag( Flag.EXCLUSIVE_FOCUS ) ) ) {
+    if ( !(console.isActive( ) && console.hasFlag( Flag.EXCLUSIVE_FOCUS ) ) && unnoticed ) {
       actions[ UP     ] = isKeyDown( keyInputs.up    , padInputs.up     );
       actions[ DOWN   ] = isKeyDown( keyInputs.down  , padInputs.down   );
       actions[ LEFT   ] = isKeyDown( keyInputs.left  , padInputs.left   );
