@@ -117,8 +117,6 @@ class Manager extends Entity<ManagerAnimState, Unit> {
     animation.registerStateAnimation( IDLE, 0, function ( ) {
         return true;
       } );
-
-    animation.setScale( 2 );
   }
 
   inline function nextTarget( ) : Void {
@@ -157,7 +155,7 @@ class Manager extends Entity<ManagerAnimState, Unit> {
 
       nextTarget( );
       updateDirection( );
-      // updateSight();
+      updateSight();
     }
   }
 
@@ -176,25 +174,20 @@ class Manager extends Entity<ManagerAnimState, Unit> {
     direction = Direction.directionTo( x, y,
       patrolPath[ target ].x * gx, patrolPath[ target ].y * gy );
 
-      if(oldDirection != direction) directionChange = true;
+    if( oldDirection != direction ) {
+      directionChange = true;
+    }
   }
 
   // NOT WORKING OR TWERKING!!
   inline function updateSight() : Void {
-    if (directionChange) {
+    if ( directionChange ) {
       directionChange = false;
-      line.remove();
+      line.remove( );
       var front = [gx, gy*0.5, 100, 4];
 
-      switch(direction) {
-        case UP: return;
-        case UP_RIGHT: return;
-        case RIGHT: drawDebugLine(front);
-        case LEFT: return;
-        case DOWN: return;
-        case DOWN_LEFT: return;
-        case DOWN_RIGHT: return;
-        case UP_LEFT: return;
+      if ( direction == RIGHT ) {
+        drawDebugLine( front );
       }
     }
   }

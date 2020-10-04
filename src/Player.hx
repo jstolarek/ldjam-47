@@ -119,10 +119,6 @@ class Player extends Entity<State, String> {
 
     resetActions( );
     setAnimations();
-
-    // FIXME: hack for prototyping purposes
-    animation.scaleX = 2;
-    animation.scaleY = 2;
   }
 
   override function fixedUpdate( ) {
@@ -142,8 +138,8 @@ class Player extends Entity<State, String> {
       vx = Const.PLAYER_SPEED;
     }
 
-    //setDebugLabel( "(x=" + Std.string( Math.floor( x ) ) +
-    //              ", y=" + Std.string( Math.floor( y ) ) + ")", 0x66dd99 );
+    setDebugLabel( "(x=" + Utils.floatToString( cx + xr, 2 ) +
+                  ", y=" + Utils.floatToString( cy + yr, 2 ) + ")", 0x66dd99 );
     // END TEST STUFF
 
     xr += vx;
