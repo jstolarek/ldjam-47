@@ -155,19 +155,27 @@ class Player extends Entity<State, String> {
     vx = vy = 0.0; // either this of applySpeedFriction below
 
     if ( isAction( UP ) ) {
-      vy = -Const.PLAYER_SPEED;
+      if ( y > 0 ) {
+        vy = -Const.PLAYER_SPEED;
+      }
     }
 
     if ( isAction( DOWN ) ) {
-      vy = Const.PLAYER_SPEED;
+      if ( y < ( level.height - 1 ) * gy ) {
+        vy = Const.PLAYER_SPEED;
+      }
     }
 
     if ( isAction( LEFT ) ) {
-      vx = -Const.PLAYER_SPEED;
+      if ( x > 0 ) {
+        vx = -Const.PLAYER_SPEED;
+      }
     }
 
     if ( isAction( RIGHT ) ) {
-      vx = Const.PLAYER_SPEED;
+      if ( x < ( level.width - 1 ) * gx ) {
+        vx = Const.PLAYER_SPEED;
+      }
     }
 
     setDebugLabel( "(x=" + Utils.floatToString( cx + xr, 2 ) +
@@ -175,6 +183,19 @@ class Player extends Entity<State, String> {
 
     xr += vx;
     yr += vy;
+
+    if ( x < 0 ) {
+      xr = 0.0;
+      vx = 0.0;
+      cx = 0;
+    }
+
+    if ( y < 0 ) {
+      yr = 0.0;
+      vy = 0.0;
+      cy = 0;
+    }
+
     handleCollisions( );
 
 //    applySpeedFriction( );
@@ -228,6 +249,7 @@ class Player extends Entity<State, String> {
   }
 
   private inline function handleCollisions( ) : Void {
+
     // if moving up then check collisions of both upper corners
     if ( vy < 0 && ( level.hasDeskCollision( leftCx , upCx ) ||
                      level.hasDeskCollision( rightCx, upCx ) ) ) {
