@@ -168,7 +168,7 @@ class Manager extends Entity<ManagerAnimState, String> implements Resetable {
       }
     }
 
-    if( checkIfPlayerInSight( ) && player.unnoticed && !player.working ) {
+    if( checkIfPlayerInSight( ) && player.unnoticed && !player.working && !player.doorOpen ) {
       noticePlayer( );
     }
   }

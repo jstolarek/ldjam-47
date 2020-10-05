@@ -375,6 +375,7 @@ class Player extends Entity<State, String> implements Resetable {
           hasKey = false;
           doorOpen = true;
           animation.visible = false;
+          working    = true;
         } else if ( !doorOpen ) {
           keyHint.visible = true;
           cooldown.setMs( "key_hint", 3000, function ( ) { keyHint.visible = false; } );

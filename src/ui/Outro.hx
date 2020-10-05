@@ -52,7 +52,7 @@ class Outro extends Entity<OutroState, String> {
         boot = bt;
 
         scoreText = new h2d.Text( Fonts.barlow32 );
-        scoreText.text    = "  Yes! Escaped!  "
+        scoreText.text    = "  You escaped!  "
                           + "\nYour time: ";
         scoreText.textColor = 0xFFFF00;
         scoreText.x       = (Const.CANVAS_WIDTH  - scoreText.textWidth) * 0.5;
