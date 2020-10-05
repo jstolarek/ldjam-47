@@ -34,13 +34,18 @@ class Boot extends Process {
   // debugging console
   public var console (default, null) : Console = null;
 
-  var music : Sfx;
+  var cooldown : Cooldown<String>;
+
+  var music    : Sfx;
+  var quitText : h2d.Text;
 
   var hud : Hud = null;
 
   public function new ( ) {
     super( );
     ME = this;
+
+    cooldown = new Cooldown<String>( );
 
 #if ( js )
     Main.canvas.addEventListener( "keydown", function ( e ) {
@@ -83,6 +88,14 @@ class Boot extends Process {
     hud = new Hud( );
     hud.show( GUI_LAYER );
 
+    // prepare quit text, but don't display it yet
+    quitText = new h2d.Text( Fonts.barlow32 );
+    quitText.text    = "Press ESCAPE again to quit";
+    quitText.x       = (Const.CANVAS_WIDTH  - quitText.textWidth ) * 0.5;
+    quitText.y       = (Const.CANVAS_HEIGHT - quitText.textHeight) * 0.5;
+    quitText.visible = false;
+    layers.add( quitText, GUI_LAYER );
+
 #if ( hl )
     music = new Sfx( hxd.Res.music_hl );
 #else
@@ -107,12 +120,27 @@ class Boot extends Process {
   }
 
   override function update( ) {
+    cooldown.update( Process.TMOD );
 #if ( hl )
     if ( ( hxd.Key.isPressed( hxd.Key.ENTER ) && hxd.Key.isDown( hxd.Key.ALT ) )
         || hxd.Key.isPressed( hxd.Key.F11 ) ) {
       Main.toggleFullscreen( );
     }
 #end
+
+#if hl
+    // Exit
+    if ( hxd.Key.isPressed( hxd.Key.ESCAPE) ) {
+      if( !cooldown.hasSetMs( "exitWarn", 1500,
+                              function ( ) { quitText.visible = false; } ) ) {
+        quitText.visible = true;
+      } else {
+        music.sound.dispose();
+        hxd.System.exit();
+      }
+    }
+#end
+
 
     if ( hxd.Key.isPressed( hxd.Key.QWERTY_TILDE ) ) {
       if ( console != null && console.isActive( ) ) {
