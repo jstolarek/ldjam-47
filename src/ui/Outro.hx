@@ -52,11 +52,12 @@ class Outro extends Entity<OutroState, String> {
         boot = bt;
 
         scoreText = new h2d.Text( Fonts.barlow32 );
-        scoreText.text    = "  You escaped!  "
-                          + "\nYour time: ";
+        scoreText.textAlign   = Center;
+        scoreText.text    = "You escaped!"
+                          + "\nYour time:";
         scoreText.textColor = 0xFFFF00;
-        scoreText.x       = (Const.CANVAS_WIDTH  - scoreText.textWidth) * 0.5;
-        scoreText.y       = (Const.CANVAS_HEIGHT - scoreText.textHeight) * 0.5;
+        scoreText.x       = (Const.CANVAS_WIDTH) * 0.5;
+        scoreText.y       = (Const.CANVAS_HEIGHT - scoreText.textHeight) * 0.25;
         scoreText.visible = false;
         layers.add( scoreText, Boot.GUI_LAYER );
 
@@ -70,7 +71,8 @@ class Outro extends Entity<OutroState, String> {
     }
 
     public function showOutro( score : Float ) {
-        scoreText.text = scoreText.text + Utils.floatToString(score, 2) + "s";
+        scoreText.text = scoreText.text + Utils.floatToString(score, 2) + "s"
+          + "\nPress Escape twice to quit";
         scoreText.visible = true;
     }
 
