@@ -93,10 +93,11 @@ Screenshots
 Known bugs
 ==========
 
-We're not aware of any major bugs but there are several quality-of-life features
-missing.  Most importantly, once you complete the game it doesn't restart, which
-means you have to either close the program (for standalone executable) and run
-it again or reload the web page (for HTML5 version).
+
+We're not aware of any major bugs but there's an important quality-of-life
+feature missing.  Once you complete the game it doesn't restart, which means you
+have to either close the program (for standalone executable) and run it again or
+reload the web page (for HTML5 version).
 
 
 Credits
