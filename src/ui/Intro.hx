@@ -40,7 +40,7 @@ enum abstract IntroState(Int) from Int to Int {
 class Intro extends Entity<IntroState, String> {
     public var spriteName = "intro";
            var player : Player;
-           var noDisplay : Bool = false;
+    public var noDisplay : Bool = false;
 
     public function new( pl : Player ) {
         super( );
@@ -69,8 +69,12 @@ class Intro extends Entity<IntroState, String> {
                 || player.isAction( DOWN )
                 || player.isAction( LEFT )
                 || player.isAction( RIGHT )
-                || player.isAction( ATTACK ) ) {
-                noDisplay = true;
+                || player.isAction( ATTACK )
+                || hxd.Key.isPressed( hxd.Key.ENTER )
+                || hxd.Key.isPressed( hxd.Key.ESCAPE )
+                || hxd.Key.isPressed( hxd.Key.SPACE )
+                ) {
+              noDisplay = true;
             }
         }
     }

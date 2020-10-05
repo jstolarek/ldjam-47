@@ -176,7 +176,7 @@ class Boot extends Process {
 
 #if hl
     // Exit
-    if ( hxd.Key.isPressed( hxd.Key.ESCAPE) ) {
+    if ( hxd.Key.isPressed( hxd.Key.ESCAPE) && intro.noDisplay ) {
       if( !cooldown.hasSetMs( "exitWarn", 1500,
                               function ( ) { quitText.visible = false; } ) ) {
         quitText.visible = true;
