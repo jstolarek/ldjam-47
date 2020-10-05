@@ -12,6 +12,7 @@ class IntroException extends haxe.Exception {}
 
 enum abstract IntroState(Int) from Int to Int {
     var INTRO;
+    var CONTROLS;
     var NO_DISPLAY;
 
     public static inline var length : Int = 2;
@@ -21,6 +22,7 @@ enum abstract IntroState(Int) from Int to Int {
       switch ( this ) {
         case INTRO : return "intro";
         case NO_DISPLAY : return "no_display";
+        case CONTROLS : return "controls";
         default   :
           throw new IntroException( "Unrecognised intro state: " + this );
       }
@@ -31,6 +33,7 @@ enum abstract IntroState(Int) from Int to Int {
       switch ( str ) {
         case "intro" : return INTRO;
         case "no_display" : return NO_DISPLAY;
+        case "controls" : return CONTROLS;
         default   :
           throw new IntroException( "Unrecognised intro state: " + str );
       }
