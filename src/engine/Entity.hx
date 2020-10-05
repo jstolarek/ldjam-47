@@ -109,8 +109,10 @@ class Entity<S,T> extends Process implements Camera.Followable {
     layers.y = y - animation.pivotY;
 
     // place the debugging label at the pivot
+#if ( devel )
     debugLabel.x = animation.pivotX - Std.int( debugLabel.textWidth * 0.5 );
     debugLabel.y = animation.pivotY;
+#end
   }
 
   private inline function checkCollisions() {
