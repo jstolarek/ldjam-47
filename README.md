@@ -81,8 +81,6 @@ Screenshots
 
 ![gameplay_preview_1](screenshots/crunch_escape_gameplay_4.png)
 
-![gameplay_preview_1](screenshots/crunch_escape_gameplay_5.png)
-
 
 Known bugs
 ==========
