@@ -34,6 +34,8 @@ class Boot extends Process {
   // debugging console
   public var console (default, null) : Console = null;
 
+  var music : Sfx;
+
   var hud : Hud = null;
 
   public function new ( ) {
@@ -81,6 +83,14 @@ class Boot extends Process {
     hud = new Hud( );
     hud.show( GUI_LAYER );
 
+#if ( hl )
+    music = new Sfx( hxd.Res.music_hl );
+#else
+    music = new Sfx( hxd.Res.music_js );
+#end
+
+    music.play( true, 0.5 );
+
     var manager = new Manager( world.currentLevel, 1, 2,
       [ { x : 7, y : 2 }, { x : 7, y : 6 }
       , { x : 1, y : 6 }, { x : 1, y : 2 } ]
@@ -113,5 +123,9 @@ class Boot extends Process {
         console.show( );
       }
     }
+  }
+
+  override function onDispose( ) {
+    music.stop( );
   }
 }
