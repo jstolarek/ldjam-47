@@ -84,7 +84,8 @@ class Intro extends Entity<IntroState, String> {
                 ) {
               if ( controls ) {
                 controls = false;
-              } else {
+                cooldown.setMs( "foo", 200 );
+              } else if ( !cooldown.has ("foo")) {
                 noDisplay = true;
               }
             }
