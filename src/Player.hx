@@ -116,6 +116,7 @@ class Player extends Entity<State, String> implements Resetable {
          var startY     : Int = 1;
 
   var collisionBox      : Rect;
+  var collisionBoxRect  : h2d.Graphics;
 
   var left    (get, never) : Float; inline function get_left()    { return x    + collisionBox.x;         }
   var up      (get, never) : Float; inline function get_up()      { return y    + collisionBox.y;         }
@@ -158,11 +159,12 @@ class Player extends Entity<State, String> implements Resetable {
     setAnimations();
 
 #if ( devel )
-    var collisionBoxRect = new h2d.Graphics( );
+    collisionBoxRect = new h2d.Graphics( );
     collisionBoxRect.beginFill( 0xFFFF0000 );
     collisionBoxRect.drawRect( collisionBox.x, collisionBox.y
                              , collisionBox.w, collisionBox.h );
     collisionBoxRect.endFill( );
+    collisionBoxRect.visible = false;
     layers.add( collisionBoxRect, Entity.DEBUG_LAYER );
 #end
   }
@@ -219,6 +221,14 @@ class Player extends Entity<State, String> implements Resetable {
     handleCollisions( );
     checkIfWorking( );
 //    applySpeedFriction( );
+
+#if ( devel )
+    if ( console.hasFlag( Console.Flag.HITBOXES ) ) {
+      collisionBoxRect.visible = true;
+    } else {
+      collisionBoxRect.visible = false;
+    }
+#end
   }
 
   private inline function setAnimations() : Void {

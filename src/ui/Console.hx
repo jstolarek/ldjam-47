@@ -29,6 +29,7 @@ enum abstract Flag(String) from String to String {
   var EXCLUSIVE_FOCUS   = "focus";
   var GRID              = "grid";
   var GOD               = "god";
+  var HITBOXES          = "hitboxes";
 }
 
 class Console extends h2d.Console {
@@ -66,8 +67,7 @@ class Console extends h2d.Console {
     // Flags enabled by default
 //    flags.set( ALWAYS_SHOW_DEBUG, Unit );
     flags.set( EXCLUSIVE_FOCUS  , Unit );
-    flags.set( DEBUG_LABELS     , Unit );
-    flags.set( GRID             , Unit );
+//    flags.set( DEBUG_LABELS     , Unit );
 
     haxe.Log.trace = function ( message, ?pos ) {
 #if ( devel )
