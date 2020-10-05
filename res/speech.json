@@ -1,11 +1,11 @@
 { "frames": [
    {
     "filename": "speech.aseprite",
-    "frame": { "x": 0, "y": 0, "w": 72, "h": 52 },
+    "frame": { "x": 0, "y": 0, "w": 83, "h": 52 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 72, "h": 52 },
-    "sourceSize": { "w": 72, "h": 52 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 83, "h": 52 },
+    "sourceSize": { "w": 83, "h": 52 },
     "duration": 100
    }
  ],
@@ -14,7 +14,7 @@
   "version": "1.2.17-x64",
   "image": "speech.png",
   "format": "RGBA8888",
-  "size": { "w": 72, "h": 52 },
+  "size": { "w": 83, "h": 52 },
   "scale": "1",
   "frameTags": [
   ]

@@ -84,7 +84,7 @@ class Manager extends Entity<ManagerAnimState, String> implements Resetable {
     this.patrolPath = patrolPath;
     player = pl;
     managerText = Aseprite.loadSpriteSheet("speech");
-    managerText.y -= 20.0; //h4ckss
+    managerText.y -= 30.0; //h4ckss
     managerText.visible = false;
     layers.add(managerText, Entity.MAIN_LAYER);
 
