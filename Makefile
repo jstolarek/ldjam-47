@@ -7,7 +7,7 @@ GAME=crunch-escape
 # Full title.  Can contain spaces.
 FULLNAME=Crunch Escape
 # Used for itch.io releases.  Remember to bump.
-VERSION=0.0.2
+VERSION=1.0.0
 # Used to upload builds to itch.io.  Optional.
 ITCHUSER=killy9999
 
