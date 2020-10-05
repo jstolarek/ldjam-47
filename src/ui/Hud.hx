@@ -17,6 +17,9 @@ class Hud extends Process {
   // measuring play time
   var gameTimeText : h2d.Text;
   var gameTime     : Float;
+  var keyIcon      : h2d.Bitmap;
+
+  var player (get, never) : Player;
 
   // Intentional lack of parent so that the HUD is rendered in s2d.  This
   // prevents moving of the user HUD together with the camera
@@ -58,6 +61,12 @@ class Hud extends Process {
     gameTimeText.text      = "0.0";
     gameTimeText.x         = 10; // Const.CANVAS_WIDTH - gameTimeText.textWidth - 10;
     layers.add( gameTimeText, 0 );
+
+    keyIcon         = new h2d.Bitmap( hxd.Res.key_icon.toTile() );
+    keyIcon.x       = 10;
+    keyIcon.y       = 40;
+    keyIcon.visible = false;
+    layers.add( keyIcon, 0 );
   }
 
   override function update( ) {
@@ -75,5 +84,15 @@ class Hud extends Process {
 
     gameTimeText.text = "Time: " + Utils.floatToString( Boot.ME.gameTime, 2 );
     // gameTimeText.x    = Const.CANVAS_WIDTH - gameTimeText.textWidth - 10;
+
+    if ( player.hasKey ) {
+      keyIcon.visible = true;
+    } else {
+      keyIcon.visible = false;
+    }
+  }
+
+  inline function get_player( ) {
+    return Boot.ME.player;
   }
 }

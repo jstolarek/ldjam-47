@@ -19,6 +19,7 @@ class Key extends Interactable {
 
   override function interact( ) {
     LOGGER.debug( "What a nice key!" );
+    player.hasKey = true;
   }
 
   override public function resetObject( ) : Void {

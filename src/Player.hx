@@ -118,6 +118,7 @@ class Player extends Entity<State, String> implements Resetable {
   var collisionBox      : Rect;
   var collisionBoxRect  : h2d.Graphics;
 
+
   var left    (get, never) : Float; inline function get_left()    { return x    + collisionBox.x;         }
   var up      (get, never) : Float; inline function get_up()      { return y    + collisionBox.y;         }
   var right   (get, never) : Float; inline function get_right()   { return left + collisionBox.w;         }
@@ -134,8 +135,9 @@ class Player extends Entity<State, String> implements Resetable {
   // Properties for convenience
   var console (get, never) : Console;
 
-  public var unnoticed     : Bool;
-  public var working     : Bool;
+  public var unnoticed : Bool;
+  public var working   : Bool;
+  public var hasKey    : Bool;
 
   public function new( ?parent : Process ) {
     super( parent );
@@ -144,8 +146,9 @@ class Player extends Entity<State, String> implements Resetable {
     padInputs  = Settings.padInputScheme;
     controller = Controller.getController( );
     actions    = new Vector<Bool>( Action.length );
-    unnoticed = true;
-    working = false;
+    unnoticed  = true;
+    working    = false;
+    hasKey     = false;
 
     // starting coordinates
     cx = startX;
