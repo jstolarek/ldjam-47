@@ -118,6 +118,8 @@ class Player extends Entity<State, String> implements Resetable {
   var collisionBox      : Rect;
   var collisionBoxRect  : h2d.Graphics;
 
+  var keyHint : h2d.Object;
+
 
   var left    (get, never) : Float; inline function get_left()    { return x    + collisionBox.x;         }
   var up      (get, never) : Float; inline function get_up()      { return y    + collisionBox.y;         }
@@ -161,6 +163,11 @@ class Player extends Entity<State, String> implements Resetable {
     resetActions( );
     setAnimations();
     setWorking( );
+
+    keyHint = Aseprite.loadSpriteSheet("speech");
+    keyHint.y -= 30.0; //h4ckss
+    keyHint.visible = false;
+    layers.add(keyHint, Entity.MAIN_LAYER);
 
 #if ( devel )
     collisionBoxRect = new h2d.Graphics( );
