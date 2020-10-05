@@ -59,7 +59,7 @@ class Interactable extends Entity<InteractableState, String> implements Resetabl
         animation.stateAnims =
             Aseprite.loadStateAnimation( spriteSheetName, InteractableState.fromString );
 
-        animation.pivot = new Animation.Pivot( 0.5, 0.5, true );
+//        animation.pivot = new Animation.Pivot( 0.5, 0.5, true );
 
         animation.registerStateAnimation( CAN_INTERACT, 2, function ( ) {
             return canInteract;
@@ -81,6 +81,7 @@ class Interactable extends Entity<InteractableState, String> implements Resetabl
         if (canInteract && player.isAction( ATTACK )) {
             interact( );
             interactionPerformed = true;
+            //player.actions[ Player.Action.ATTACK ] = false;
         }
     }
 

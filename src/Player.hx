@@ -110,7 +110,7 @@ class Player extends Entity<State, String> implements Resetable {
   public var padInputs  : InputScheme<Controller.PadKey>;
   public var controller : Controller;
          var direction  : Direction;
-         var actions    : Vector<Bool>;
+  public var actions    : Vector<Bool>;
   public var speed      : Float;
          var startX     : Int = 12;
          var startY     : Int = 1;

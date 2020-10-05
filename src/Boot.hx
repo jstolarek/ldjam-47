@@ -80,13 +80,9 @@ class Boot extends Process {
     layers.add( coffee.layers, ENTITY_LAYER );
     levelObjects.push(coffee);
 
-    var key = new Key( 14, 6, player );
+    var key = new Key( 4, 9, 0.5, 0.0, player );
     layers.add( key.layers, ENTITY_LAYER );
     levelObjects.push(key);
-
-    var small_key = new SmallKey( 3, 7, 0.5, 0.0 );
-    layers.add( small_key.layers, ENTITY_LAYER );
-    levelObjects.push( small_key );
 
     layers.add( player.layers, ENTITY_LAYER );
     levelObjects.push(player);
