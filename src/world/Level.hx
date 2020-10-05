@@ -55,6 +55,10 @@ class Level extends Process {
     return isValid( x, y ) && collisions[ y ][ x ] == Collision.DESK;
   }
 
+  public inline function hasDoorCollision( x : Int, y : Int ) : Bool {
+    return isValid( x, y ) && collisions[ y ][ x ] == Collision.DOOR;
+  }
+
   public inline function isWithinWorkArea( x : Int, y : Int ) : Bool {
     return isValid( x, y ) && collisions[ y ][ x ] == Collision.WORK_AREA;
   }

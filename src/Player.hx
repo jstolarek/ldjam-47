@@ -224,6 +224,7 @@ class Player extends Entity<State, String> implements Resetable {
 
     handleCollisions( );
     checkIfWorking( );
+    checkDoor();
 //    applySpeedFriction( );
 
 #if ( devel )
@@ -354,6 +355,18 @@ class Player extends Entity<State, String> implements Resetable {
       setWorking( );
     }
   }
+
+  private inline function checkDoor( ) : Void {
+    if ( hasKey && actions[ ATTACK ] ) {
+      var door_collision = level.hasDoorCollision( leftCx , downCx )
+        && level.hasDoorCollision( rightCx, downCx );
+      if ( yr < 0.5 && door_collision ) {
+        LOGGER.debug( "Door opened" );
+        hasKey = false;
+      }
+    }
+  }
+
 
   function setWorking( ) {
     var collison_upper  = level.isWithinWorkArea( leftCx , upCx   )

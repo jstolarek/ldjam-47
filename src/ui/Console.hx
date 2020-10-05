@@ -68,6 +68,8 @@ class Console extends h2d.Console {
 //    flags.set( ALWAYS_SHOW_DEBUG, Unit );
     flags.set( EXCLUSIVE_FOCUS  , Unit );
 //    flags.set( DEBUG_LABELS     , Unit );
+//    flags.set( GOD              , Unit );
+//    flags.set( HITBOXES         , Unit );
 
     haxe.Log.trace = function ( message, ?pos ) {
 #if ( devel )
