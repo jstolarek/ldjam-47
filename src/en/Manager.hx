@@ -168,7 +168,7 @@ class Manager extends Entity<ManagerAnimState, String> implements Resetable {
       }
     }
 
-    if( checkIfPlayerInSight( ) && player.unnoticed && !player.working) {
+    if( checkIfPlayerInSight( ) && player.unnoticed && !player.working ) {
       noticePlayer( );
     }
   }
@@ -180,7 +180,9 @@ class Manager extends Entity<ManagerAnimState, String> implements Resetable {
 
   override function onTouch<S, T>(e: Entity<S, T>) {
     pieOfSight.remove();
-    noticePlayer( );
+    if( player.unnoticed && !player.working ) {
+      noticePlayer( );
+    }
   }
 
   inline function updateDirection( ) : Void {
