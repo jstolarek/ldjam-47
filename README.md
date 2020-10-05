@@ -22,11 +22,14 @@ version as well as Windows, Linux, and Mac builds).
 Rules
 =====
 
-Your task is to get out of your office without the managers noticing.  Every
-time they catch you they will send you back to your desk and you have to start
-over.  The exit door are locked and the key is placed on a desk at the other
-side of the office.  Collect the key and escape through the exit door.  Use
-space bar to:
+Your corporate project is falling behind schedule, so the management introduced
+a six-day working week.  But who wants to stay in the office on Saturdays?  Your
+task is to get out of your office without the managers noticing.  Every time
+they catch you they will send you back to your desk and you have to start over.
+The exit door are locked and the key is placed on a desk at the other side of
+the office.  Collect the key and escape through the exit door.  Navigate your
+character using arrows or D-pad on a controller.  Use space bar or controller A
+button to:
 
   * sit at the nearby desk and pretend that you're working.  This will cause
     managers to ignore you.
