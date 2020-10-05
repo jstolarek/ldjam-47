@@ -3,13 +3,13 @@
 
 # short game name used for the executable and the release archives names.  No
 # spaces.
-GAME=gameStub
+GAME=crunch-escape
 # Full title.  Can contain spaces.
-FULLNAME=Game Stub
+FULLNAME=Crunch Escape
 # Used for itch.io releases.  Remember to bump.
 VERSION=0.0.1
 # Used to upload builds to itch.io.  Optional.
-ITCHUSER=
+ITCHUSER=killy9999
 
 CC=clang
 
