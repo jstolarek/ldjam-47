@@ -114,7 +114,10 @@ class Boot extends Process {
     music.play( true, 0.5 );
 #end
 
-    var addManager = (sx:Int, sy:Int, dx:Int, dy:Int, walkingClockwise:Bool) -> {
+    intro = new Intro( player );
+    layers.add( intro.layers, INTRO_LAYER );
+
+    var addManager = (sx:Int, sy:Int, dx:Int, dy:Int, walkingClockwise:Bool = true) -> {
       if ( walkingClockwise ) {
         var manager = new Manager( world.currentLevel, sx, sy,
           [ { x : sx + dx, y : sy      }, { x : sx + dx, y : sy + dy }
@@ -133,27 +136,26 @@ class Boot extends Process {
         levelObjects.push(manager);
       }
     };
-    var addManagerWalkingAroundDesk = (sx:Int, sy:Int, clockwise:Bool) -> {
-      addManager(sx, sy, 3, 2, clockwise);
+    var addManagerWalkingAroundDesks = (sx:Int, sy:Int, clockwise:Bool = true, desksX:Int = 1, desksY:Int = 1) -> {
+      addManager(sx, sy, ((2 + 1) * desksX), (2 * desksY), clockwise);
     };
-    addManagerWalkingAroundDesk(2, 2, false);
-    // addManagerWalkingAroundDesk(2, 4, false);
-    // addManagerWalkingAroundDesk(2, 6, false);
-    // addManagerWalkingAroundDesk(2, 8, false);
-    // addManagerWalkingAroundDesk(5, 2, false);
-    // addManagerWalkingAroundDesk(5, 4, false);
-    // addManagerWalkingAroundDesk(5, 6, false);
-    // addManagerWalkingAroundDesk(5, 8, false);
-    // addManagerWalkingAroundDesk(8, 2, false);
-    // addManagerWalkingAroundDesk(8, 4, false);
-    // addManagerWalkingAroundDesk(8, 6, false);
-    // addManagerWalkingAroundDesk(8, 8, false);
-    // addManagerWalkingAroundDesk(11, 2, false);
-    // addManagerWalkingAroundDesk(11, 4, false);
-    // addManagerWalkingAroundDesk(11, 6, false);
-    // addManagerWalkingAroundDesk(11, 8, false);
-    intro = new Intro( player );
-    layers.add( intro.layers, INTRO_LAYER );
+
+    addManagerWalkingAroundDesks(2, 2, false, 2, 1);
+    // addManagerWalkingAroundDesks(2, 4, true);
+    // addManagerWalkingAroundDesks(2, 6, false);
+    // addManagerWalkingAroundDesks(2, 8, false);
+    // addManagerWalkingAroundDesks(5, 2, false);
+    // addManagerWalkingAroundDesks(5, 4, false);
+    // addManagerWalkingAroundDesks(5, 6, false);
+    // addManagerWalkingAroundDesks(5, 8, false);
+    // addManagerWalkingAroundDesks(8, 2, false);
+    // addManagerWalkingAroundDesks(8, 4, false);
+    // addManagerWalkingAroundDesks(8, 6, false);
+    // addManagerWalkingAroundDesks(8, 8, false);
+    // addManagerWalkingAroundDesks(11, 2, false);
+    // addManagerWalkingAroundDesks(11, 4, false);
+    // addManagerWalkingAroundDesks(11, 6, false);
+    // addManagerWalkingAroundDesks(11, 8, false);
   }
 
   public function loopLevel( ) : Void {
