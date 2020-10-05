@@ -166,7 +166,7 @@ class Player extends Entity<State, String> implements Resetable {
     setAnimations();
     setWorking( );
 
-    keyHint = Aseprite.loadSpriteSheet("speech");
+    keyHint = Aseprite.loadSpriteSheet("hero_speech");
     keyHint.y -= 30.0; //h4ckss
     keyHint.visible = false;
     layers.add(keyHint, Entity.MAIN_LAYER);
