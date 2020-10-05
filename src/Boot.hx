@@ -141,21 +141,10 @@ class Boot extends Process {
     };
 
     addManagerWalkingAroundDesks(2, 2, false, 2, 1);
-    // addManagerWalkingAroundDesks(2, 4, true);
-    // addManagerWalkingAroundDesks(2, 6, false);
-    // addManagerWalkingAroundDesks(2, 8, false);
-    // addManagerWalkingAroundDesks(5, 2, false);
-    // addManagerWalkingAroundDesks(5, 4, false);
-    // addManagerWalkingAroundDesks(5, 6, false);
-    // addManagerWalkingAroundDesks(5, 8, false);
-    // addManagerWalkingAroundDesks(8, 2, false);
-    // addManagerWalkingAroundDesks(8, 4, false);
-    // addManagerWalkingAroundDesks(8, 6, false);
-    // addManagerWalkingAroundDesks(8, 8, false);
-    // addManagerWalkingAroundDesks(11, 2, false);
-    // addManagerWalkingAroundDesks(11, 4, false);
-    // addManagerWalkingAroundDesks(11, 6, false);
-    // addManagerWalkingAroundDesks(11, 8, false);
+    addManagerWalkingAroundDesks(8, 8, true, 2, 1);
+    addManagerWalkingAroundDesks(2, 6, true, 1, 2);
+    addManagerWalkingAroundDesks(11, 2, false, 1, 2);
+    addManagerWalkingAroundDesks(5, 4, true, 2, 2);
   }
 
   public function loopLevel( ) : Void {
