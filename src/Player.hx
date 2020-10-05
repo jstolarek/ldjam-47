@@ -113,7 +113,7 @@ class Player extends Entity<State, String> implements Resetable {
          var actions    : Vector<Bool>;
   public var speed      : Float;
          var startX     : Int = 12;
-         var startY     : Int = 1;
+         var startY     : Int = 3;
 
   var collisionBox      : Rect;
   var collisionBoxRect  : h2d.Graphics;
@@ -157,6 +157,7 @@ class Player extends Entity<State, String> implements Resetable {
 
     resetActions( );
     setAnimations();
+    setWorking( );
 
 #if ( devel )
     collisionBoxRect = new h2d.Graphics( );
@@ -347,35 +348,39 @@ class Player extends Entity<State, String> implements Resetable {
 
   private inline function checkIfWorking( ) : Void {
     if ( actions[ ATTACK ] ) {
-      var collison_upper  = level.isWithinWorkArea( leftCx , upCx   )
-        || level.isWithinWorkArea( rightCx, upCx   );
-      var collision_lower = level.isWithinWorkArea( leftCx , downCx )
-        || level.isWithinWorkArea( rightCx, downCx );
-      var collision_left  = level.isWithinWorkArea( leftCx , downCx )
-        || level.isWithinWorkArea( leftCx , upCx   );
-      var collision_right = level.isWithinWorkArea( rightCx, downCx )
-        || level.isWithinWorkArea( rightCx, upCx   );
+      setWorking( );
+    }
+  }
 
-      if ( collison_upper || collision_lower || collision_left || collision_right ) {
-        working = true;
-      }
+  function setWorking( ) {
+    var collison_upper  = level.isWithinWorkArea( leftCx , upCx   )
+      || level.isWithinWorkArea( rightCx, upCx   );
+    var collision_lower = level.isWithinWorkArea( leftCx , downCx )
+      || level.isWithinWorkArea( rightCx, downCx );
+    var collision_left  = level.isWithinWorkArea( leftCx , downCx )
+      || level.isWithinWorkArea( leftCx , upCx   );
+    var collision_right = level.isWithinWorkArea( rightCx, downCx )
+      || level.isWithinWorkArea( rightCx, upCx   );
 
-      if ( collision_left && collision_right ) {
-        cx = leftCx;
-        cy = upCx - 1;
-        xr = 0.5;
-        yr = 0.25;
-      } else if ( collision_left ) {
-        cx = leftCx - 1;
-        cy = upCx - 1;
-        xr = 0.5;
-        yr = 0.25;
-      } else if ( collision_right ) {
-        cx = rightCx;
-        cy = upCx - 1;
-        xr = 0.5;
-        yr = 0.25;
-      }
+    if ( collison_upper || collision_lower || collision_left || collision_right ) {
+      working = true;
+    }
+
+    if ( collision_left && collision_right ) {
+      cx = leftCx;
+      cy = upCx - 1;
+      xr = 0.5;
+      yr = 0.25;
+    } else if ( collision_left ) {
+      cx = leftCx - 1;
+      cy = upCx - 1;
+      xr = 0.5;
+      yr = 0.25;
+    } else if ( collision_right ) {
+      cx = rightCx;
+      cy = upCx - 1;
+      xr = 0.5;
+      yr = 0.25;
     }
   }
 
