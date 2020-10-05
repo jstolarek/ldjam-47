@@ -25,7 +25,7 @@ class Boot extends Process {
   public static var WORLD_LAYER   = _inc++;
   public static var ENTITY_LAYER  = _inc++;
   public static var FG_LAYER      = _inc++;
-  public static var INTRO_LAYER   = _inc++;
+  public static var INTRO_OUTRO_LAYER = _inc++;
   public static var GUI_LAYER     = _inc++;
   public static var CONSOLE_LAYER = _inc++;
   // Properties for convenience
@@ -44,6 +44,7 @@ class Boot extends Process {
   public var gameStartTime : Float = 0.0;
   public var gameTime      : Float = 0.0;
          var intro         : Intro;
+         var outro         : Outro;
 
   var hud : Hud = null;
 
@@ -115,7 +116,9 @@ class Boot extends Process {
 #end
 
     intro = new Intro( player );
-    layers.add( intro.layers, INTRO_LAYER );
+    layers.add( intro.layers, INTRO_OUTRO_LAYER );
+    outro = new Outro( player, this );
+    layers.add( outro.layers, INTRO_OUTRO_LAYER );
 
     var addManager = (sx:Int, sy:Int, dx:Int, dy:Int, walkingClockwise:Bool = true) -> {
       if ( walkingClockwise ) {
