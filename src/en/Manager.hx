@@ -94,7 +94,7 @@ class Manager extends Entity<ManagerAnimState, String> implements Resetable {
     updateSight( );
 
     animation.stateAnims =
-      Aseprite.loadStateAnimation( "player", ManagerAnimState.fromString );
+      Aseprite.loadStateAnimation( "manager", ManagerAnimState.fromString );
 
     animation.registerStateAnimation( WALK_UP, 1, function ( ) {
         return direction == UP;
