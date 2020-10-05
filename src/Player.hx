@@ -282,43 +282,57 @@ class Player extends Entity<State, String> implements Resetable {
   }
 
   private inline function handleCollisions( ) : Void {
-
-    // if moving up then check collisions of both upper corners
-    if ( vy < 0 && ( level.hasDeskCollision( leftCx , upCx ) ||
-                     level.hasDeskCollision( rightCx, upCx ) ) ) {
-      yr -= vy;
-      vy = 0.0; // stop
-      //cy = upCx;
-      //yr = 0.25;
+    // Handle collisions with desks
+    var sgn = (x:Float) -> (x == 0) ? 0 : ((x > 0) ? 1 : -1);
+    var svx = sgn(vx);
+    var svy = sgn(vy);
+    var coll = (sx:Int, sy:Int) -> {
+      var cx = (sx == 1) ? rightCx : leftCx;
+      var cy = (sy == 1) ? downCx : upCx;
+      return level.hasDeskCollision(cx, cy);
     }
-
-    // if moving down check collisions on both lower corners
-    if ( vy > 0 && ( level.hasDeskCollision( leftCx , downCx ) ||
-                     level.hasDeskCollision( rightCx, downCx ) ) ) {
-      yr -= vy;
-      vy = 0.0; // stop
-//      cy = downCx - 1;
-//      yr = 0.0;
-    }
-
-    // if moving left check collisions on both left corners
-    if ( vx < 0 && ( level.hasDeskCollision( leftCx, downCx ) ||
-                     level.hasDeskCollision( leftCx, upCx   ) ) ) {
+    var stopX = () -> {
       xr -= vx;
       vx = 0.0; // stop
-//      cx = leftCx;
-//      xr = 0.85;
-    }
+    };
+    var stopY = () -> {
+      yr -= vy;
+      vy = 0.0; // stop
+    };
 
-    // if moving right check collisions on both right corners
-    if ( vx > 0 && ( level.hasDeskCollision( rightCx, downCx ) ||
-                     level.hasDeskCollision( rightCx, upCx   ) ) ) {
-      xr -= vx;
-      vx = 0.0; // stop
-//      cx = rightCx - 1;
-//      xr = 0.2;
+    // Moving left or right
+    if (svx != 0 && svy == 0) {
+      if (coll(svx, 1) || coll(svx, -1)) {
+        stopX();
+      }
     }
+    // Moving up or down
+    else if (svx == 0 && svy != 0) {
+      if (coll(1, svy) || coll(-1, svy)) {
+        stopY();
+      }
+    }
+    // Moving diagonally
+    else if (svx != 0 && svy != 0) {
+      if ((coll(svx, -1) && coll(svx, 1)) || coll(svx, svy * -1)) {
+        stopX();
+      } else if ((coll(-1, svy) && coll(1, svy)) || coll(svx * -1, svy)) {
+        stopY();
+      } else if (coll(svx, svy)) {
+        var dx = (svx > 0) ? rightXr: 1.0 - leftXr;
+        var dy = (svy > 0) ? downYr : 1.0 - upYr;
 
+        if (dx == dy) {
+          // when equal (very rarely) prefer stopping in y direction
+          // to avoid full stop
+          stopY();
+        } else if (dx > dy) {
+          stopY();
+        } else {
+          stopX();
+        }
+      }
+    }
   }
 
   private inline function checkIfWorking( ) : Void {
