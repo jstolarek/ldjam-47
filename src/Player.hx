@@ -466,5 +466,6 @@ class Player extends Entity<State, String> implements Resetable {
     yr = 0.25;
     speed = Const.PLAYER_SPEED;
     resetActions( );
+    setWorking( );
   }
 }
