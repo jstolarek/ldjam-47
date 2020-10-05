@@ -179,7 +179,6 @@ class Manager extends Entity<ManagerAnimState, String> implements Resetable {
   }
 
   override function onTouch<S, T>(e: Entity<S, T>) {
-    pieOfSight.remove();
     if( player.unnoticed && !player.working ) {
       noticePlayer( );
     }
