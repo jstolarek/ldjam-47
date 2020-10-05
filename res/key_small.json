@@ -1,28 +1,28 @@
 { "frames": [
    {
-    "filename": "key_small_0.aseprite",
-    "frame": { "x": 0, "y": 0, "w": 12, "h": 16 },
+    "filename": "key_small 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 3, "y": 0, "w": 12, "h": 16 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "sourceSize": { "w": 16, "h": 16 },
     "duration": 100
    },
    {
-    "filename": "key_small_1.aseprite",
-    "frame": { "x": 12, "y": 0, "w": 12, "h": 16 },
+    "filename": "key_small 1.aseprite",
+    "frame": { "x": 16, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 3, "y": 0, "w": 12, "h": 16 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "sourceSize": { "w": 16, "h": 16 },
     "duration": 100
    },
    {
-    "filename": "key_small_2.aseprite",
-    "frame": { "x": 0, "y": 16, "w": 12, "h": 16 },
+    "filename": "key_small 2.aseprite",
+    "frame": { "x": 32, "y": 0, "w": 16, "h": 16 },
     "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 3, "y": 0, "w": 12, "h": 16 },
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "sourceSize": { "w": 16, "h": 16 },
     "duration": 100
    }
@@ -32,15 +32,11 @@
   "version": "1.2.17-x64",
   "image": "key_small.png",
   "format": "RGBA8888",
-  "size": { "w": 24, "h": 32 },
+  "size": { "w": 48, "h": 16 },
   "scale": "1",
   "frameTags": [
-   { "name": "idle", "from": 0, "to": 0, "direction": "forward" },
-   { "name": "can_interact", "from": 1, "to": 1, "direction": "forward" },
+   { "name": "can_interact", "from": 0, "to": 1, "direction": "forward" },
    { "name": "interaction_performed", "from": 2, "to": 2, "direction": "forward" }
-  ],
-  "layers": [
-   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
   ]
  }
 }
