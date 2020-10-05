@@ -11,7 +11,12 @@ version as well as Windows, Linux, and Mac builds).
 
 ![gameplay](screenshots/crunch_escape_gameplay_3.png)
 
-**TODO:** Setting introduction: plot and goals.
+**Welcome back, Employee!**
+
+  * Your CorpCorp login: user34237438
+  * Your productivity level %, last week average: 60%
+
+**WARNING:** You risk working overtime! Please adjust your productivity level!
 
 
 Rules
@@ -85,7 +90,10 @@ Screenshots
 Known bugs
 ==========
 
-None (though maybe collisions could be better).
+We're not aware of any major bugs but there are several quality-of-life features
+missing.  Most importantly, once you complete the game it doesn't restart, which
+means you have to either close the program (for standalone executable) and run
+it again or reload the web page (for HTML5 version).
 
 
 Credits
