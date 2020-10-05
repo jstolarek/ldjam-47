@@ -28,6 +28,7 @@ enum abstract Flag(String) from String to String {
   // registered when console is open.
   var EXCLUSIVE_FOCUS   = "focus";
   var GRID              = "grid";
+  var GOD               = "god";
 }
 
 class Console extends h2d.Console {

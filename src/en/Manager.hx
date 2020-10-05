@@ -273,14 +273,16 @@ class Manager extends Entity<ManagerAnimState, String> implements Resetable {
   }
 
   private function noticePlayer( ) : Void {
-    player.unnoticed = false;
-    animation.paused = true;
-    managerText.visible = true;
+    if ( !Boot.ME.console.hasFlag( Console.Flag.GOD ) ) {
+      player.unnoticed = false;
+      animation.paused = true;
+      managerText.visible = true;
 
     cooldown.setMs("ending", 3000, function ( ) {
-      LOGGER.info("<< GAME RESET >>");
-      Boot.ME.loopLevel();
-    });
+        LOGGER.info("<< GAME RESET >>");
+        Boot.ME.loopLevel();
+      });
+    }
   }
 
   public function resetObject() : Void {
