@@ -230,7 +230,7 @@ class Manager extends Entity<ManagerAnimState, String> implements Resetable {
 
   private inline function drawDebugPie( ) {
     pieOfSight = new h2d.Graphics();
-    pieOfSight.beginFill(0xF000FFAA, 0.2);
+    pieOfSight.beginFill(0xD6F538AA, 0.2);
     pieOfSight.drawPie(sightData[0], sightData[1], sightData[2], sightData[3]  - sightAngle / 2.0, sightData[4]);
     pieOfSight.endFill();
     layers.add(pieOfSight, Entity.MAIN_LAYER);
