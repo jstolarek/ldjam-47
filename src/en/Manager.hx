@@ -222,9 +222,7 @@ class Manager extends Entity<ManagerAnimState, String> implements Resetable {
           sightData[3] = 5 * Math.PI / 4.0;
       }
 
-#if ( devel )
       drawDebugPie( );
-#end
     }
   }
 
