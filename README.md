@@ -19,7 +19,7 @@ Your task is to get out of your office without the managers noticing.  Every
 time they catch you they will send you back to your desk and you have to start
 over.  The exit door are locked and the key is placed on a desk at the other
 side of the office.  Collect the key and escape through the exit door.  Use
-SHIFT button to:
+space bar to:
 
   * sit at the nearby desk and pretend that you're working.  This will cause
     managers to ignore you.
@@ -33,7 +33,7 @@ Controls
 ========
 
   * **Move:** Arrows / D-pad (on a controller)
-  * **Interact:** Shift / A (on a controller)
+  * **Interact:** Space / A (on a controller)
   * **Quit:** press Esc twice
 
 

@@ -121,7 +121,7 @@ class Settings {
       , left   : hxd.Key.LEFT
       , right  : hxd.Key.RIGHT
       , jump   : hxd.Key.SPACE
-      , attack : hxd.Key.LSHIFT
+      , attack : hxd.Key.SPACE
       };
 
     var defaultPadInputScheme =
