@@ -39,6 +39,9 @@ class Boot extends Process {
   var music    : Sfx;
   var quitText : h2d.Text;
 
+  public var gameStartTime : Float = 0.0;
+  public var gameTime      : Float = 0.0;
+
   var hud : Hud = null;
 
   public function new ( ) {
@@ -46,6 +49,8 @@ class Boot extends Process {
     ME = this;
 
     cooldown = new Cooldown<String>( );
+    gameStartTime = haxe.Timer.stamp( );
+    gameTime      = 0.0;
 
 #if ( js )
     Main.canvas.addEventListener( "keydown", function ( e ) {
@@ -121,6 +126,7 @@ class Boot extends Process {
 
   override function update( ) {
     cooldown.update( Process.TMOD );
+
 #if ( hl )
     if ( ( hxd.Key.isPressed( hxd.Key.ENTER ) && hxd.Key.isDown( hxd.Key.ALT ) )
         || hxd.Key.isPressed( hxd.Key.F11 ) ) {
@@ -141,7 +147,6 @@ class Boot extends Process {
     }
 #end
 
-
     if ( hxd.Key.isPressed( hxd.Key.QWERTY_TILDE ) ) {
       if ( console != null && console.isActive( ) ) {
         LOGGER.debug( "Hiding debugging console" );
@@ -151,6 +156,8 @@ class Boot extends Process {
         console.show( );
       }
     }
+
+    gameTime = haxe.Timer.stamp( ) - gameStartTime;
   }
 
   override function onDispose( ) {

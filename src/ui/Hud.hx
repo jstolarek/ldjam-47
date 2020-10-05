@@ -14,6 +14,10 @@ class Hud extends Process {
   var fps : h2d.Text;
   var debugGrid : h2d.Graphics;
 
+  // measuring play time
+  var gameTimeText : h2d.Text;
+  var gameTime     : Float;
+
   // Intentional lack of parent so that the HUD is rendered in s2d.  This
   // prevents moving of the user HUD together with the camera
   public function new( ) {
@@ -46,6 +50,14 @@ class Hud extends Process {
 
     debugGrid.visible = false;
     layers.add( debugGrid, 0 );
+
+    gameTimeText           = new h2d.Text( Fonts.barlow24 );
+    gameTimeText.textColor = 0xFFFF00;
+    gameTimeText.visible   = true;
+    gameTimeText.y         = 10;
+    gameTimeText.text      = "0.0";
+    gameTimeText.x         = 10; // Const.CANVAS_WIDTH - gameTimeText.textWidth - 10;
+    layers.add( gameTimeText, 0 );
   }
 
   override function update( ) {
@@ -60,5 +72,8 @@ class Hud extends Process {
     } else {
       debugGrid.visible = false;
     }
+
+    gameTimeText.text = "Time: " + Utils.floatToString( Boot.ME.gameTime, 2 );
+    // gameTimeText.x    = Const.CANVAS_WIDTH - gameTimeText.textWidth - 10;
   }
 }

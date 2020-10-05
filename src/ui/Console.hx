@@ -64,7 +64,7 @@ class Console extends h2d.Console {
     addAlias( "-", "unset" );
 
     // Flags enabled by default
-    flags.set( ALWAYS_SHOW_DEBUG, Unit );
+//    flags.set( ALWAYS_SHOW_DEBUG, Unit );
     flags.set( EXCLUSIVE_FOCUS  , Unit );
     flags.set( DEBUG_LABELS     , Unit );
     flags.set( GRID             , Unit );
