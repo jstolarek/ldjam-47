@@ -160,13 +160,19 @@ class Animation<T> extends h2d.Drawable {
 
   public function registerStateAnimation( state      : T
                                         , priority   : Int
-                                        , ?condition : Void -> Bool ) : Void {
+                                        , ?condition : Void -> Bool
+                                        , ?loop      : Bool
+                                        ) : Void {
     useStateAnimations = true;
 
     var anim = new StateAnimInstance( );
     anim.stateAnim = stateAnims.get( state );
     anim.priority  = priority;
-    anim.looped    = true; // state animations assumed to be loops by default
+    if( loop != null){
+      anim.looped = loop;
+    } else {
+      anim.looped    = true; // state animations assumed to be loops by default
+    }
     if ( condition != null ) {
       anim.condition = condition;
     } else {
