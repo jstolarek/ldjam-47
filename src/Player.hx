@@ -364,12 +364,17 @@ class Player extends Entity<State, String> implements Resetable {
   }
 
   private inline function checkDoor( ) : Void {
-    if ( hasKey && actions[ ATTACK ] ) {
+    if ( actions[ ATTACK ] ) {
       var door_collision = level.hasDoorCollision( leftCx , downCx )
         && level.hasDoorCollision( rightCx, downCx );
       if ( yr < 0.5 && door_collision ) {
-        LOGGER.debug( "Door opened" );
-        hasKey = false;
+        if ( hasKey ) {
+          LOGGER.debug( "Door opened" );
+          hasKey = false;
+        } else {
+          keyHint.visible = true;
+          cooldown.setMs( "key_hint", 3000, function ( ) { keyHint.visible = false; } );
+        }
       }
     }
   }
