@@ -140,6 +140,7 @@ class Player extends Entity<State, String> implements Resetable {
   public var unnoticed : Bool;
   public var working   : Bool;
   public var hasKey    : Bool;
+  public var doorOpen  : Bool;
 
   public function new( ?parent : Process ) {
     super( parent );
@@ -151,6 +152,7 @@ class Player extends Entity<State, String> implements Resetable {
     unnoticed  = true;
     working    = false;
     hasKey     = false;
+    doorOpen   = false;
 
     // starting coordinates
     cx = startX;
@@ -368,10 +370,11 @@ class Player extends Entity<State, String> implements Resetable {
       var door_collision = level.hasDoorCollision( leftCx , downCx )
         && level.hasDoorCollision( rightCx, downCx );
       if ( yr < 0.5 && door_collision ) {
-        if ( hasKey ) {
+        if ( hasKey && !doorOpen ) {
           LOGGER.debug( "Door opened" );
           hasKey = false;
-        } else {
+          doorOpen = true;
+        } else if ( !doorOpen ) {
           keyHint.visible = true;
           cooldown.setMs( "key_hint", 3000, function ( ) { keyHint.visible = false; } );
         }
@@ -472,7 +475,11 @@ class Player extends Entity<State, String> implements Resetable {
   }
 
   public function resetObject() : Void {
+    doorOpen   = false;
     unnoticed = true;
+    hasKey = false;
+    keyHint.visible = false;
+    cooldown.reset( );
     cx = startX;
     cy = startY;
     yr = 0.25;
