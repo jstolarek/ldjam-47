@@ -54,7 +54,7 @@ enum abstract State(Int) from Int to Int {
   var WALK_DOWN_RIGHT;
   var WALK_DOWN_LEFT;
 
-  public static inline var length : Int = 2;
+  public static inline var length : Int = 10;
 
   @:to
   public function toString( ) : String {

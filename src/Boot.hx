@@ -84,6 +84,10 @@ class Boot extends Process {
     layers.add( key.layers, ENTITY_LAYER );
     levelObjects.push(key);
 
+    var small_key = new SmallKey( 3, 7, 0.5, 0.0 );
+    layers.add( small_key.layers, ENTITY_LAYER );
+    levelObjects.push( small_key );
+
     layers.add( player.layers, ENTITY_LAYER );
     levelObjects.push(player);
 
@@ -107,7 +111,9 @@ class Boot extends Process {
     music = new Sfx( hxd.Res.music_js );
 #end
 
+#if ( release )
     music.play( true, 0.5 );
+#end
 
     var manager = new Manager( world.currentLevel, 1, 2,
       [ { x : 7, y : 2 }, { x : 7, y : 6 }
