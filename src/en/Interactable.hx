@@ -81,7 +81,6 @@ class Interactable extends Entity<InteractableState, String> implements Resetabl
         if (canInteract && player.isAction( ATTACK )) {
             interact( );
             interactionPerformed = true;
-            //player.actions[ Player.Action.ATTACK ] = false;
         }
     }
 

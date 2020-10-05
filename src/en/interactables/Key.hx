@@ -14,7 +14,7 @@ class Key extends Interactable {
     this.cy = startCy = cy;
     this.xr = startXr = xr;
     this.yr = startYr = yr;
-    interactRadius = 1.0;
+    interactRadius = 1.5;
   }
 
   override function interact( ) {
