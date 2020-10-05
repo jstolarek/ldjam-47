@@ -5,6 +5,7 @@ class ManagerException extends haxe.Exception {}
 // list of states a manager can be in
 enum abstract ManagerAnimState(Int) from Int to Int {
   var IDLE;
+  var SIT;
   var WALK_UP;
   var WALK_UP_RIGHT;
   var WALK_RIGHT;
@@ -20,6 +21,7 @@ enum abstract ManagerAnimState(Int) from Int to Int {
   public function toString( ) : String {
     switch ( this ) {
       case IDLE            : return "idle";
+      case SIT             : return "sit";
       case WALK_UP         : return "walk_up";
       case WALK_UP_RIGHT   : return "walk_up_right";
       case WALK_RIGHT      : return "walk_right";
@@ -37,6 +39,7 @@ enum abstract ManagerAnimState(Int) from Int to Int {
   public static function fromString( str : String ) : ManagerAnimState {
     switch ( str ) {
       case "idle"            : return IDLE;
+      case "sit"             : return SIT;
       case "walk_up"         : return WALK_UP;
       case "walk_up_right"   : return WALK_UP_RIGHT;
       case "walk_right"      : return WALK_RIGHT;

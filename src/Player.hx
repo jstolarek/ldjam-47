@@ -34,10 +34,17 @@ enum abstract Action(Int) from Int to Int {
   }
 }
 
+enum abstract AnimationPriority(Int) from Int to Int {
+  var IDLE_ANIM_PRIORITY = 0;
+  var SIT_ANIM_PRIORITY  = 1;
+  var WALK_ANIM_PRIORITY = 2;
+}
+
 // list of states a player can be in
 // Describes animation state
 enum abstract State(Int) from Int to Int {
   var IDLE;
+  var SIT;
   var WALK_UP;
   var WALK_DOWN;
   var WALK_RIGHT;
@@ -53,14 +60,15 @@ enum abstract State(Int) from Int to Int {
   public function toString( ) : String {
     switch ( this ) {
       case IDLE            : return "idle";
+      case SIT             : return "sit";
       case WALK_UP         : return "walk_up";
       case WALK_DOWN       : return "walk_down";
       case WALK_RIGHT      : return "walk_right";
       case WALK_LEFT       : return "walk_left";
       case WALK_UP_RIGHT   : return "walk_up_right";
-      case WALK_UP_LEFT   : return "walk_up_left";
+      case WALK_UP_LEFT    : return "walk_up_left";
       case WALK_DOWN_RIGHT : return "walk_down_right";
-      case WALK_DOWN_LEFT : return "walk_down_left";
+      case WALK_DOWN_LEFT  : return "walk_down_left";
       default   :
         throw new PlayerException( "Unrecognised player state: " + this );
     }
@@ -70,6 +78,7 @@ enum abstract State(Int) from Int to Int {
   public static function fromString( str : String ) : State {
     switch ( str ) {
       case "idle": return IDLE;
+      case "sit" : return SIT;
       case "walk_up": return WALK_UP;
       case "walk_down": return WALK_DOWN;
       case "walk_right": return WALK_RIGHT;
@@ -161,6 +170,10 @@ class Player extends Entity<State, String> implements Resetable {
   override function fixedUpdate( ) {
     vx = vy = 0.0; // either this of applySpeedFriction below
 
+    if ( isActions( [ UP, DOWN, LEFT, RIGHT ] ) ) {
+      working = false;
+    }
+
     if ( isAction( UP ) ) {
       if ( y > 0 ) {
         vy = -speed;
@@ -213,39 +226,52 @@ class Player extends Entity<State, String> implements Resetable {
       Aseprite.loadStateAnimation( "player", State.fromString );
 //    animation.pivot = new Animation.Pivot( 0.5, 0.5, true );
 
-    animation.registerStateAnimation( WALK_UP, 1, function ( ) {
-      return actions[ UP ];
+    animation.registerStateAnimation( WALK_UP, WALK_ANIM_PRIORITY,
+      function ( ) {
+        return actions[ UP ];
     } );
 
-    animation.registerStateAnimation( WALK_DOWN, 1, function ( ) {
-      return actions[ DOWN ];
+    animation.registerStateAnimation( WALK_DOWN, WALK_ANIM_PRIORITY,
+      function ( ) {
+        return actions[ DOWN ];
     } );
 
-    animation.registerStateAnimation( WALK_RIGHT, 1, function ( ) {
-      return actions[ RIGHT ];
+    animation.registerStateAnimation( WALK_RIGHT, WALK_ANIM_PRIORITY,
+      function ( ) {
+        return actions[ RIGHT ];
     } );
 
-    animation.registerStateAnimation( WALK_LEFT, 1, function ( ) {
-      return actions[ LEFT ];
+    animation.registerStateAnimation( WALK_LEFT, WALK_ANIM_PRIORITY,
+      function ( ) {
+        return actions[ LEFT ];
     } );
 
-    animation.registerStateAnimation( WALK_UP_RIGHT, 1, function ( ) {
+    animation.registerStateAnimation( WALK_UP_RIGHT, WALK_ANIM_PRIORITY,
+      function ( ) {
         return actions[ UP ] && actions[ RIGHT ];
       } );
 
-    animation.registerStateAnimation( WALK_DOWN_RIGHT, 1, function ( ) {
-      return actions[ DOWN ] && actions[ RIGHT ];
+    animation.registerStateAnimation( WALK_DOWN_RIGHT, WALK_ANIM_PRIORITY,
+      function ( ) {
+        return actions[ DOWN ] && actions[ RIGHT ];
     } );
 
-    animation.registerStateAnimation( WALK_UP_LEFT, 1, function ( ) {
-      return actions[ UP ] && actions[ LEFT ];
+    animation.registerStateAnimation( WALK_UP_LEFT, WALK_ANIM_PRIORITY,
+      function ( ) {
+        return actions[ UP ] && actions[ LEFT ];
     } );
 
-    animation.registerStateAnimation( WALK_DOWN_LEFT, 1, function ( ) {
-      return actions[ DOWN ] && actions[ LEFT ];
+    animation.registerStateAnimation( WALK_DOWN_LEFT, WALK_ANIM_PRIORITY,
+      function ( ) {
+        return actions[ DOWN ] && actions[ LEFT ];
     } );
 
-    animation.registerStateAnimation( IDLE, 0, function ( ) {
+    animation.registerStateAnimation( SIT, SIT_ANIM_PRIORITY,
+      function ( ) {
+        return working;
+    } );
+
+    animation.registerStateAnimation( IDLE, IDLE_ANIM_PRIORITY, function ( ) {
       return true;
     } );
   }
@@ -296,19 +322,37 @@ class Player extends Entity<State, String> implements Resetable {
   }
 
   private inline function checkIfWorking( ) : Void {
-    var atTheDesk = false;
+    if ( actions[ ATTACK ] ) {
+      var collison_upper  = level.isWithinWorkArea( leftCx , upCx   )
+        || level.isWithinWorkArea( rightCx, upCx   );
+      var collision_lower = level.isWithinWorkArea( leftCx , downCx )
+        || level.isWithinWorkArea( rightCx, downCx );
+      var collision_left  = level.isWithinWorkArea( leftCx , downCx )
+        || level.isWithinWorkArea( leftCx , upCx   );
+      var collision_right = level.isWithinWorkArea( rightCx, downCx )
+        || level.isWithinWorkArea( rightCx, upCx   );
 
-    var collison_upper = level.isWithinWorkArea( leftCx , upCx ) || level.isWithinWorkArea( rightCx, upCx);
-    var collision_lower = level.isWithinWorkArea( leftCx , downCx ) || level.isWithinWorkArea( rightCx, downCx);
-    var collision_left = level.isWithinWorkArea( leftCx, downCx ) || level.isWithinWorkArea( leftCx, upCx);
-    var collision_right = level.isWithinWorkArea( rightCx, downCx ) || level.isWithinWorkArea( rightCx, upCx);
+      if ( collison_upper || collision_lower || collision_left || collision_right ) {
+        working = true;
+      }
 
-
-    if (collison_upper || collision_lower || collision_left || collision_right) {
-        atTheDesk = true;
+      if ( collision_left && collision_right ) {
+        cx = leftCx;
+        cy = upCx - 1;
+        xr = 0.5;
+        yr = 0.25;
+      } else if ( collision_left ) {
+        cx = leftCx - 1;
+        cy = upCx - 1;
+        xr = 0.5;
+        yr = 0.25;
+      } else if ( collision_right ) {
+        cx = rightCx;
+        cy = upCx - 1;
+        xr = 0.5;
+        yr = 0.25;
+      }
     }
-
-    working = atTheDesk;
   }
 
   private inline function resetActions( ) : Void {
@@ -349,6 +393,15 @@ class Player extends Entity<State, String> implements Resetable {
 
   public inline function isAction( action : Action ) : Bool {
     return actions[ action ];
+  }
+
+  public function isActions( actionsToCheck : Array<Action> ) : Bool {
+    for ( action in actionsToCheck ) {
+      if ( actions[ action ] ) {
+        return true;
+      }
+    }
+    return false;
   }
 
   inline function isKeyDown( keyboardKey   : Int
