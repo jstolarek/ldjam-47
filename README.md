@@ -5,9 +5,11 @@ Source code for a Ludum Dare 47 entry.
 
 Theme: *stuck in a loop*.
 
-**TODO:** [Official submission](SUBMISSION-LINK-HERE) + [itch.io](ITCH-IO-LINK).
+[Official submission](https://ldjam.com/events/ludum-dare/47/crunch-escape) +
+[itch.io](https://killy9999.itch.io/crunch-escape) (contains an embedded HTML5
+version as well as Windows, Linux, and Mac builds).
 
-**TODO:** add gameplay preview: `![gameplay](screenshots/GAMEPLAY_PREVIEW)`
+![gameplay](screenshots/crunch_escape_gameplay_3.png)
 
 **TODO:** Setting introduction: plot and goals.
 
@@ -71,7 +73,15 @@ On Linux you can create release builds for Linux, Windows, and HTML5 by running
 Screenshots
 ===========
 
-**TODO:** add some screenshots like this: `![TITLE](screenshots/SCREENSHOT.JPG)`
+![gameplay_preview_1](screenshots/crunch_escape_title_screen.png)
+
+![gameplay_preview_1](screenshots/crunch_escape_gameplay_1.png)
+
+![gameplay_preview_1](screenshots/crunch_escape_gameplay_2.png)
+
+![gameplay_preview_1](screenshots/crunch_escape_gameplay_4.png)
+
+![gameplay_preview_1](screenshots/crunch_escape_gameplay_5.png)
 
 
 Known bugs
