@@ -72,7 +72,7 @@ class Level extends Process {
     assert( this.foreground == null );
 
     this.foreground = foreground;
-    layers.add( foreground, FG_LAYER );
+    Boot.ME.layers.add( foreground, Boot.FG_LAYER );
   }
 
   public function set_height( height : Int ) : Int {

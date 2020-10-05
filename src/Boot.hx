@@ -24,6 +24,7 @@ class Boot extends Process {
   static var _inc : Int = 0;
   public static var WORLD_LAYER   = _inc++;
   public static var ENTITY_LAYER  = _inc++;
+  public static var FG_LAYER      = _inc++;
   public static var GUI_LAYER     = _inc++;
   public static var CONSOLE_LAYER = _inc++;
   // Properties for convenience
