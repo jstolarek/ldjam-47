@@ -35,7 +35,8 @@
   "size": { "w": 48, "h": 16 },
   "scale": "1",
   "frameTags": [
-   { "name": "can_interact", "from": 0, "to": 1, "direction": "forward" },
+   { "name": "idle", "from": 0, "to": 0, "direction": "forward" },
+   { "name": "can_interact", "from": 1, "to": 1, "direction": "forward" },
    { "name": "interaction_performed", "from": 2, "to": 2, "direction": "forward" }
   ]
  }
