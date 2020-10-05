@@ -111,13 +111,44 @@ class Boot extends Process {
     music.play( true, 0.5 );
 #end
 
-    var manager = new Manager( world.currentLevel, 1, 2,
-      [ { x : 7, y : 2 }, { x : 7, y : 6 }
-      , { x : 1, y : 6 }, { x : 1, y : 2 } ]
-      , player
-    );
-    world.currentLevel.addManager( manager );
-    levelObjects.push(manager);
+    var addManager = (sx:Int, sy:Int, dx:Int, dy:Int, walkingClockwise:Bool) -> {
+      if ( walkingClockwise ) {
+        var manager = new Manager( world.currentLevel, sx, sy,
+          [ { x : sx + dx, y : sy      }, { x : sx + dx, y : sy + dy }
+          , { x : sx,      y : sy + dy }, { x : sx,      y : sy      } ]
+          , player
+        );
+        world.currentLevel.addManager( manager );
+        levelObjects.push(manager);
+      } else {
+        var manager = new Manager( world.currentLevel, sx, sy,
+          [ { x : sx,      y : sy + dy }, { x : sx + dx, y : sy + dy }
+          , { x : sx + dx, y : sy      }, { x : sx,      y : sy      } ]
+          , player
+        );
+        world.currentLevel.addManager( manager );
+        levelObjects.push(manager);
+      }
+    };
+    var addManagerWalkingAroundDesk = (sx:Int, sy:Int, clockwise:Bool) -> {
+      addManager(sx, sy, 3, 2, clockwise);
+    };
+    addManagerWalkingAroundDesk(2, 2, false);
+    // addManagerWalkingAroundDesk(2, 4, false);
+    // addManagerWalkingAroundDesk(2, 6, false);
+    // addManagerWalkingAroundDesk(2, 8, false);
+    // addManagerWalkingAroundDesk(5, 2, false);
+    // addManagerWalkingAroundDesk(5, 4, false);
+    // addManagerWalkingAroundDesk(5, 6, false);
+    // addManagerWalkingAroundDesk(5, 8, false);
+    // addManagerWalkingAroundDesk(8, 2, false);
+    // addManagerWalkingAroundDesk(8, 4, false);
+    // addManagerWalkingAroundDesk(8, 6, false);
+    // addManagerWalkingAroundDesk(8, 8, false);
+    // addManagerWalkingAroundDesk(11, 2, false);
+    // addManagerWalkingAroundDesk(11, 4, false);
+    // addManagerWalkingAroundDesk(11, 6, false);
+    // addManagerWalkingAroundDesk(11, 8, false);
   }
 
   public function loopLevel( ) : Void {
