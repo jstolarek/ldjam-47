@@ -44,6 +44,7 @@ class Intro extends Entity<IntroState, String> {
     public var spriteName = "intro";
            var player : Player;
     public var noDisplay : Bool = false;
+    public var controls  : Bool = true;
 
     public function new( pl : Player ) {
         super( );
@@ -54,6 +55,10 @@ class Intro extends Entity<IntroState, String> {
 
         animation.stateAnims =
             Aseprite.loadStateAnimation( spriteName, IntroState.fromString );
+
+        animation.registerStateAnimation( CONTROLS, 1, function ( ) {
+           return controls;
+        }, false );
 
         //animation.pivot = new Animation.Pivot( 0.5, 0.5, true );
         animation.registerStateAnimation( NO_DISPLAY, 1, function ( ) {
@@ -67,7 +72,7 @@ class Intro extends Entity<IntroState, String> {
     }
 
     override function fixedUpdate( ) {
-        if(!noDisplay) {
+        if( !noDisplay ) {
             if (player.isAction( UP )
                 || player.isAction( DOWN )
                 || player.isAction( LEFT )
@@ -77,7 +82,11 @@ class Intro extends Entity<IntroState, String> {
                 || hxd.Key.isPressed( hxd.Key.ESCAPE )
                 || hxd.Key.isPressed( hxd.Key.SPACE )
                 ) {
-              noDisplay = true;
+              if ( controls ) {
+                controls = false;
+              } else {
+                noDisplay = true;
+              }
             }
         }
     }
