@@ -106,14 +106,14 @@ class Boot extends Process {
     layers.add( quitText, GUI_LAYER );
 
 #if ( hl )
-    music = new Sfx( hxd.Res.music_hl );
+    music = new Sfx( hxd.Res.office_ambient_hl );
 #else
-    music = new Sfx( hxd.Res.music_js );
+    music = new Sfx( hxd.Res.office_ambient_js );
 #end
 
-#if ( release )
-    music.play( true, 0.5 );
-#end
+//#if ( release )
+    music.play( true, 0.7 );
+//#end
 
     intro = new Intro( player );
     layers.add( intro.layers, INTRO_OUTRO_LAYER );
