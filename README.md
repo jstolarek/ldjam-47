@@ -105,4 +105,5 @@ Credits
 
   * Programming: killy9999, spacePotato, Waev, silnar
   * Graphics: spacePotato, Waev
-  * Sound: Waev
+  * Sound: [from Freesound](https://freesound.org/people/Dean-Raul_DiArchangeli/sounds/108695/)
+  * Controls prompts by [Retrocade Media](https://retrocademedia.itch.io/buttonprompts4)
